@@ -27,6 +27,17 @@ export default {
   },
 
   plugins: [
+    {
+      src: '~/plugins/globalComponents'
+    },
+    {
+      src: '~/plugins/veeValidate',
+      mode: 'client'
+    },
+    {
+      src: '~/plugins/notifications',
+      mode: 'client'
+    }
   ],
 
   components: true,

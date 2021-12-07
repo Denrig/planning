@@ -1,5 +1,12 @@
 [
   {
+    "name": "create-room",
+    "path": "/create-room",
+    "component": "/Users/bogdan/Documents/planning/pages/create-room/index.vue",
+    "chunkName": "pages/create-room/index",
+    "_name": "_34009e79"
+  },
+  {
     "name": "index",
     "path": "/",
     "component": "/Users/bogdan/Documents/planning/pages/index.vue",

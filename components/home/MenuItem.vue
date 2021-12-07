@@ -17,7 +17,7 @@ export default {
 
   methods: {
     handleItemClicked(){
-      console.log("dasda")
+      this.$emit('itemClicked')
     }
   }
 }
