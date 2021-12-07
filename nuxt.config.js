@@ -39,6 +39,10 @@ export default {
     'bootstrap-vue/nuxt',
   ],
 
+  bootstrapVue: {
+    icons: true
+  },
+
   build: {
   }
 }
