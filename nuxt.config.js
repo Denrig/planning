@@ -21,6 +21,8 @@ export default {
     scss: [
       '~assets/styles/vars/colors.scss',
       '~assets/styles/vars/animations.scss',
+      '~assets/styles/vars/text.scss',
+      '~assets/styles/imported/include-media.scss',
     ]
   },
 

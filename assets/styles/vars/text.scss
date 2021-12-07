@@ -1,0 +1,14 @@
+@font-face {
+    font-family: "futura";
+    src: local("futura"),
+     url(~assets/fonts/futura/futur.ttf) format("truetype");
+}
+
+// Text sizes
+$small-text: 16px;
+$medium-text: 20px;
+$big-text: 24px;
+
+// Text fonts
+
+$futura-font: futura;
