@@ -2,8 +2,25 @@
   height: 100vh;
   width: 100vw;
   z-index: -1;
-  .carousel-inner, .carusel-item , .carousel-image{
-      height: 100vh;
-      width: 100vw; 
+  
+  .carousel-inner, .carusel-item {
+    height: 100vh;
+    width: 100vw; 
+  }
+
+  .carousel-image {
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(to left, transparent 50%, black 100%);
+    }
   }
 }
