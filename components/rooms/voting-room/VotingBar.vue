@@ -5,7 +5,7 @@
     @click="handleCancelVote"
     :style="{ visibility: hasVoted ? 'initial' : 'hidden' }"
   ) Cancel Vote
-  .card(v-for="card in cards" @click="handleCardClicked($event)") {{ card }}    
+  .card(v-for="card in cards" @click="handleCardClicked($event)" :key="card") {{ card }}    
 
 </template>
 <script>

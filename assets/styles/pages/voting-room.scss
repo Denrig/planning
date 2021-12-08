@@ -6,6 +6,7 @@
 
   .voting-stage {
     display: flex;
+    overflow: hidden;
 
     .tasks-section {
       width: 20vw;
