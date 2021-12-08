@@ -11,16 +11,16 @@ export default {
     backgroundColor: {
       type: String,
       required: false,
-      default: '#FFF'
+      default: '#FFF',
     },
   },
 
   methods: {
-    handleItemClicked(){
-      this.$emit('itemClicked')
-    }
-  }
-}
+    handleItemClicked() {
+      this.$emit('itemClicked');
+    },
+  },
+};
 </script>
 <style lang="scss">
 .menu-item{

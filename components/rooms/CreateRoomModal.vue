@@ -56,32 +56,31 @@
                 button.app-button.w-100(
 
                 ) Create Room!
-              
-
 </template>
 <script>
-import Modal from '@/components/common/Modal'
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex';
+import Modal from '@/components/common/Modal.vue';
+
 export default {
   components: {
-    Modal
+    Modal,
   },
 
   computed: {
     ...mapGetters({
-      createRoomModal: 'modal/createRoomModal'
-    })
+      createRoomModal: 'modal/createRoomModal',
+    }),
   },
 
   methods: {
     ...mapMutations({
-      handleCreateRoomModalState: 'modal/handleCreateRoomModalState'
+      handleCreateRoomModalState: 'modal/handleCreateRoomModalState',
     }),
 
-    handleCreateRoom(){
-    }
-  }
-}
+    handleCreateRoom() {
+    },
+  },
+};
 </script>
 <style lang="scss">
 .create-room-modal{
