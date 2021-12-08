@@ -1,6 +1,10 @@
 <template lang="pug">
 .cards-section.w-100
   .indicator(ref='indicator')
+  button.app-button.cancel-vote(
+    @click="handleCancelVote"
+    :style="{ visibility: hasVoted ? 'initial' : 'hidden' }"
+  ) Cancel Vote
   .card(v-for="card in cards" @click="handleCardClicked($event)") {{ card }}    
 
 </template>
@@ -9,6 +13,7 @@ export default {
 name:'VotingBar',
 data() {
   return {
+    hasVoted: false,
     cards: [0.5, 1, 3, 5, 8, 13, 21, '?']
   }
  },
@@ -17,16 +22,26 @@ data() {
       const coords = event.target.getBoundingClientRect();
       const indicator = this.$refs.indicator;
       indicator.style.left = `${coords.x}px`;
-
+      this.hasVoted = true;
       this.handleSelectNumber(event.target);
     },
 
     handleSelectNumber(currentElement) {
-      const previous = document.getElementsByClassName('active')[0]
-      if(previous) {
-        previous.classList.remove('active')
-      }
+      this.removeCurrentActiveClass()
       currentElement.classList.add('active');
+    },
+
+    handleCancelVote() {
+      this.hasVoted = false;
+      this.removeCurrentActiveClass()
+      this.$refs.indicator.style.left ='5vw';
+    },
+
+    removeCurrentActiveClass(){
+      const element = document.getElementsByClassName('active')[0]
+      if(element) {
+        element.classList.remove('active')
+      }
     }
   }
 }
@@ -42,7 +57,7 @@ data() {
     bottom: 50px;
     height: 100px;
     width: 100px;
-    left: 50px;
+    left: 5vw;
     background-color: $pink;
     border-radius: 100%;
     border: 5px solid $white;
@@ -71,6 +86,11 @@ data() {
       box-shadow: 0 -10px 0 0 $white;
     }
   } 
+
+  .cancel-vote {
+    background-color: $pink;
+    margin: auto 0;
+  }
  
   .card {
     display: flex;
