@@ -1,5 +1,6 @@
 <template lang="pug">
 .home-page
+  CreateRoomModal
   b-carousel.carousel(
     id="carousel-fade"
     fade
@@ -41,8 +42,9 @@
         .details-text
           span This section is used for creating a new planning room.
           span Click on the 'Create Room' button and you will be redirected to the room creation page.
-        .app-link.create-room-button
-          nuxt-link(to="create-room") Create Room
+        button.w-100.app-link.create-room-button.border-none(
+          @click="handleCreateRoomModalState(true)"
+        ) Create Room
     MenuItem.rooms-list-section(backgroundColor="#4f4f4f")
       template(v-slot:header)
         span List Of Rooms
@@ -56,11 +58,14 @@
 
 <script>
 import MenuItem from '@/components/home/MenuItem.vue'
+import CreateRoomModal from '@/components/rooms/CreateRoomModal.vue'
 import { BIcon } from 'bootstrap-vue'
+import { mapMutations} from 'vuex'
 export default {
   components:{
     MenuItem,
-    BIcon
+    BIcon,
+    CreateRoomModal
   },
 
   data(){
@@ -76,14 +81,20 @@ export default {
   },
 
   methods: {
+    ...mapMutations({
+      handleCreateRoomModalState: 'modal/handleCreateRoomModalState'
+    }),
+
     onSlideStart(slide) {
       this.sliding = true
     },
+
     onSlideEnd(slide) {
       this.sliding = false
     },
+
     handleCheckCode(){
-    }
+    },
   }
 }
 </script>
@@ -94,6 +105,7 @@ export default {
   .menu-items-container {
     position: fixed;
     display: flex;
+    z-index: 1;
   }
 
   .create-room-button {
@@ -112,6 +124,10 @@ export default {
 
   .rooms-list-section{
     color: $yellow;
+  }
+
+  .details-text {
+    margin: 10px 0;
   }
 }
 

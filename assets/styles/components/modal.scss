@@ -1,0 +1,140 @@
+.custom-modal-backdrop {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  backdrop-filter: blur(1px);
+  z-index: 2;
+}
+
+.custom-modal {
+  position: relative;
+  background: white;
+  border-radius: 32px;
+  box-shadow: 0 6px 50px 0 rgb(0, 0, 0);
+
+  width: 95vw;
+  padding: 40px;
+  margin: auto;
+
+  overflow-y: auto;
+  width: 100vw;
+  max-height: var(--vh);
+
+  display: flex;
+  flex-direction: column;
+
+  font-family: $main-font;
+
+  @include media("<desktop") {
+    max-height: 96vh;
+
+    &.small {
+      width: 60vw;
+    }
+
+    &.medium {
+      width: 80vw;
+    }
+
+    &.large {
+      width: 80vw;
+    }
+  }
+
+  @include media(">=desktop") {
+    max-height: 90vh;
+
+    &.small {
+      width: 50vw;
+      max-width: 544px;
+    }
+
+    &.medium {
+      width: 70vw;
+      max-width: 724px;
+    }
+
+    &.large {
+      width: 80vw;
+    }
+  }
+}
+
+.btn-close {
+  background-color: transparent;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+
+  width: 40px;
+  height: 40px;
+
+  svg {
+    width: 40px;
+    height: 40px;
+  }
+
+  border: none;
+  font-size: 30px;
+  font-weight: bolder;
+}
+
+.modal-header {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  @include media("<desktop") {
+    margin-bottom: 36px;
+  }
+
+  .title {
+    font-size: $big-text;
+    font-weight: 700;
+    letter-spacing: -0.32px;
+    line-height: 56px;
+    text-align: left;
+    max-width: 80%;
+
+    @include media(">=desktop") {
+      font-size: $bigger-text;
+    }
+  }
+
+  .description {
+    font-size: $small-text;
+    font-weight: 400;
+    letter-spacing: 0.35px;
+    line-height: 20px;
+  }
+}
+
+.modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 40px;
+
+  @include media("<desktop") {
+    justify-content: flex-end;
+  }
+
+  @include media(">=desktop") {
+    margin-bottom: 20px;
+  }
+
+  .btn-link {
+    font-size: $small-text;
+    font-weight: 800;
+    letter-spacing: 0.32px;
+    line-height: 16px;
+    text-align: center;
+  }
+}
