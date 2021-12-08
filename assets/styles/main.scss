@@ -5,3 +5,10 @@
 @import 'components/carousel.scss';
 @import 'components/inputs.scss';
 @import 'components/modal.scss';
+
+// Pages
+@import 'pages/voting-room.scss';
+
+body {
+  font-family: $main-font;
+}

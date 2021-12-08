@@ -1,0 +1,30 @@
+.voting-room .desktop-layout {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  height: inherit;
+
+  .voting-stage {
+    display: flex;
+
+    .tasks-section {
+      width: 20vw;
+    }
+  
+    .players-section {
+      height: calc(100vh - 50px);
+      width: calc(100vw - 20vw);
+      border: 1px solid red;
+    }  
+  }
+
+  .cards-section{
+    position: absolute;
+    bottom: 0;
+    height: 50px;
+  }
+
+  .result {
+    background-color: yellow;
+  }
+}
