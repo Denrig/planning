@@ -34,7 +34,7 @@
 </template>
 <script>
 export default {
-  name: "TasksSection",
+  name: 'TasksSection',
 
   data() {
     return {
@@ -42,12 +42,12 @@ export default {
       tasks: [
         {
           id: 1,
-          title: "Bartai titlu pentru taskuri",
+          title: 'Bartai titlu pentru taskuri',
         },
         {
           id: 2,
           title:
-            "Bartai titlu pentru taskuri care e ceva mai lung in panina masii si a lui hristos",
+            'Bartai titlu pentru taskuri care e ceva mai lung in panina masii si a lui hristos',
         },
       ],
       addTaskEnabled: false,

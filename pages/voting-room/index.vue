@@ -4,9 +4,9 @@
   MobileLayout(v-else)
 </template>
 <script>
-import DesktopLayout from "@/components/rooms/voting-room/DesktopLayout.vue";
-import MobileLayout from "@/components/rooms/voting-room/MobileLayout.vue";
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions } from 'vuex';
+import DesktopLayout from '@/components/rooms/voting-room/DesktopLayout.vue';
+import MobileLayout from '@/components/rooms/voting-room/MobileLayout.vue';
 
 export default {
   components: {
@@ -15,14 +15,14 @@ export default {
   },
 
   watch: {
-    isDesktop: function (value) {
+    isDesktop(value) {
       console.log(value);
     },
   },
 
   computed: {
     ...mapGetters({
-      isDesktop: "layout/isDesktop",
+      isDesktop: 'layout/isDesktop',
     }),
   },
 
@@ -32,7 +32,7 @@ export default {
 
   methods: {
     ...mapActions({
-      initLayoutModule: "layout/initLayoutModule",
+      initLayoutModule: 'layout/initLayoutModule',
     }),
   },
 };

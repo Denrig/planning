@@ -41,7 +41,8 @@
       template(v-slot:content)
         .details-text
           span This section is used for creating a new planning room.
-          span Click on the 'Create Room' button and you will be redirected to the room creation page.
+          span Click on the 'Create Room' button and you
+          | will be redirected to the room creation page.
         button.w-100.app-link.create-room-button.border-none(
           @click="handleCreateRoomModalState(true)"
         ) Create Room
@@ -51,52 +52,54 @@
         BIcon(icon="view-list")
       template(v-slot:content)
         .details-text
-          span You don't have a code to enter the room, search through the list and find the one you're looking for!
+          span You don't have a code to enter the room,
+          | search through the list and find the one you're looking for!
         .app-link.rooms-list-button
           nuxt-link(to="rooms-list") Go Now!
 </template>>
 
 <script>
-import MenuItem from '@/components/home/MenuItem.vue'
-import CreateRoomModal from '@/components/rooms/CreateRoomModal.vue'
-import { BIcon } from 'bootstrap-vue'
-import { mapMutations} from 'vuex'
+import { BIcon } from 'bootstrap-vue';
+import { mapMutations } from 'vuex';
+import MenuItem from '@/components/home/MenuItem.vue';
+import CreateRoomModal from '@/components/rooms/CreateRoomModal.vue';
+
 export default {
-  components:{
+  components: {
     MenuItem,
     BIcon,
-    CreateRoomModal
+    CreateRoomModal,
   },
 
-  data(){
-    return{
+  data() {
+    return {
       slide: false,
       code: null,
       images: [
-       'https://images3.alphacoders.com/106/1069102.jpg',
-       'https://i.redd.it/v2cmfx8rbdv11.jpg',
-       'https://i.pinimg.com/originals/7d/98/84/7d98840fdff1b2e7cd508cc7f3a17403.jpg'
-      ]
-    }
+        'https://images3.alphacoders.com/106/1069102.jpg',
+        'https://i.redd.it/v2cmfx8rbdv11.jpg',
+        'https://i.pinimg.com/originals/7d/98/84/7d98840fdff1b2e7cd508cc7f3a17403.jpg',
+      ],
+    };
   },
 
   methods: {
     ...mapMutations({
-      handleCreateRoomModalState: 'modal/handleCreateRoomModalState'
+      handleCreateRoomModalState: 'modal/handleCreateRoomModalState',
     }),
 
-    onSlideStart(slide) {
-      this.sliding = true
+    onSlideStart() {
+      this.sliding = true;
     },
 
-    onSlideEnd(slide) {
-      this.sliding = false
+    onSlideEnd() {
+      this.sliding = false;
     },
 
-    handleCheckCode(){
+    handleCheckCode() {
     },
-  }
-}
+  },
+};
 </script>
 <style lang="scss">
 .home-page {
@@ -134,8 +137,8 @@ export default {
 @include media(">=desktop"){
   .home-page{
     flex-direction: column;
-     
-    .details-text { 
+
+    .details-text {
       text-align: center;
     }
 
@@ -145,14 +148,14 @@ export default {
       bottom: -300px;
     }
 
-    .details-text { 
+    .details-text {
       font-size: $big-text;
     }
 
     .app-links {
       margin-top: 30px;
     }
-  } 
+  }
 }
 
 @include media("<desktop"){
@@ -162,7 +165,7 @@ export default {
     right: 0;
     height: 100%;
 
-    .details-text { 
+    .details-text {
       font-size: $small-text;
     }
   }

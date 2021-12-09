@@ -23,34 +23,34 @@ export default {
     size: {
       type: String,
       required: false,
-      default: 'medium'
+      default: 'medium',
     },
     modalTitle: {
       type: String,
-      required: true
+      required: true,
     },
     modalDescription: {
       type: String,
-      required: true
+      required: true,
     },
     backgroundImage: {
       type: String,
-      default: ''
+      default: '',
     },
     displayed: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   watch: {
-    displayed: function(newVal, oldVal) {
-      if (newVal === true) this.$emit('show')
-    }
+    displayed(newVal, oldVal) {
+      if (newVal === true) this.$emit('show');
+    },
   },
   methods: {
     close() {
-      this.$emit('close')
-    }
-  }
-}
+      this.$emit('close');
+    },
+  },
+};
 </script>

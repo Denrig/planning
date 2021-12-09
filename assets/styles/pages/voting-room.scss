@@ -13,9 +13,10 @@
     }
   
     .players-section {
-      height: calc(100vh - 50px);
+      display: grid;
+      grid-template-columns: repeat(5, auto);
+      height: calc(100vh - 60px);
       width: calc(100vw - 20vw);
-      border: 1px solid red;
     }  
   }
 

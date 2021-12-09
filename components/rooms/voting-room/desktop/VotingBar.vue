@@ -5,46 +5,46 @@
     @click="handleCancelVote"
     :style="{ visibility: hasVoted ? 'initial' : 'hidden' }"
   ) Cancel Vote
-  .card(v-for="card in cards" @click="handleCardClicked($event)" :key="card") {{ card }}    
+  .card(v-for="card in cards" @click="handleCardClicked($event)" :key="card") {{ card }}
 
 </template>
 <script>
 export default {
-name:'VotingBar',
-data() {
-  return {
-    hasVoted: false,
-    cards: [0.5, 1, 3, 5, 8, 13, 21, '?']
-  }
- },
+  name: 'VotingBar',
+  data() {
+    return {
+      hasVoted: false,
+      cards: [0.5, 1, 3, 5, 8, 13, 21, '?'],
+    };
+  },
   methods: {
     handleCardClicked(event) {
       const coords = event.target.getBoundingClientRect();
-      const indicator = this.$refs.indicator;
+      const { indicator } = this.$refs;
       indicator.style.left = `${coords.x}px`;
       this.hasVoted = true;
       this.handleSelectNumber(event.target);
     },
 
     handleSelectNumber(currentElement) {
-      this.removeCurrentActiveClass()
+      this.removeCurrentActiveClass();
       currentElement.classList.add('active');
     },
 
     handleCancelVote() {
       this.hasVoted = false;
-      this.removeCurrentActiveClass()
-      this.$refs.indicator.style.left ='5vw';
+      this.removeCurrentActiveClass();
+      this.$refs.indicator.style.left = '5vw';
     },
 
-    removeCurrentActiveClass(){
-      const element = document.getElementsByClassName('active')[0]
-      if(element) {
-        element.classList.remove('active')
+    removeCurrentActiveClass() {
+      const element = document.getElementsByClassName('active')[0];
+      if (element) {
+        element.classList.remove('active');
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 <style lang="scss">
 .cards-section{
@@ -85,13 +85,14 @@ data() {
       border-top-right-radius: 100%;
       box-shadow: 0 -10px 0 0 $white;
     }
-  } 
+  }
 
   .cancel-vote {
     background-color: $pink;
     margin: auto 0;
+    max-width: 150px;
   }
- 
+
   .card {
     display: flex;
     align-items: center;

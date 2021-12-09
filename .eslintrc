@@ -1,10 +1,37 @@
 {
-  "root": true,
-  "parser": "@babel/eslint-parser",
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true,
+    "jest": true
+  },
   "parserOptions": {
-    "sourceType": "module"
+    "parser": "babel-eslint"
   },
   "extends": [
-    "@nuxtjs"
-  ]
+    "airbnb-base",
+    "plugin:vue/recommended"
+  ],
+  "rules": {
+    "import/no-unresolved": "off",
+    "import/prefer-default-export": "off",
+    "no-underscore-dangle": "off",
+    "no-param-reassign": "off",
+    "no-extraneous-dependencies": "off",
+    "class-methods-use-this": "off",
+    "camelcase": "off",
+    "import/no-cycle": "off",
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ]
+      }
+    }
+  }
 }

@@ -1,0 +1,60 @@
+.player-wrapper {
+  position: relative;
+  width: 100px;
+  height: 150px;
+  margin: 10px;
+
+  .vote-display {
+    position: relative;
+    top: -140px;
+    z-index: -1;
+    visibility: hidden;
+    
+    &.active {
+      visibility: visible;
+      animation: vote 2s;
+      animation-fill-mode: forwards;
+    }
+  }
+}
+
+.player, .avatar{
+  width: inherit;
+  height: inherit;
+}
+
+.player {
+  .name {
+    text-align: center;
+    font-weight: $bold;
+    font-size: $big-text;
+  }
+}
+
+.vote-display {
+  width: 70px;
+  .circle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: -2;
+    height: 70px;
+    background-color: $white;
+    border: 1px solid black;
+    border-radius: 100%;
+    span {
+      font-size: $bigger-text;
+      font-weight: $bold;
+      transform: rotate(-45deg);
+    }
+  }
+  .handle{
+      z-index: -2;
+      position: relative;
+      margin: 0 auto;
+      bottom: 10px;
+      width: 10px;
+      height: 70px;
+      border: 1px solid black;
+  }
+} 
