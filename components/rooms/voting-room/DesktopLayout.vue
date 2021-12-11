@@ -11,7 +11,7 @@
 import VotingBar from "@/components/rooms/voting-room/desktop/VotingBar.vue";
 import TasksSection from "@/components/rooms/voting-room/desktop/TasksSection.vue";
 import Player from "@/components/rooms/voting-room/Player.vue";
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 export default {
   name: "DesktopLayout",
 
@@ -23,13 +23,27 @@ export default {
 
   computed: {
     ...mapGetters({
-      currentUser: "user/currentUser",
+      currentUserId: "user/currentUserId",
     }),
   },
 
+  created() {
+    this.checkCurrentUser();
+  },
+
   methods: {
+    ...mapMutations({
+      handleUserModalState: "modal/handleUserModalState",
+    }),
+    ...mapActions({
+      getCurrentUser: "user/getCurrentUser",
+    }),
+
     checkCurrentUser() {
-      if (!this.currentUser.id) {
+      if (!this.currentUserId) {
+        this.handleUserModalState(true);
+      } else {
+        this.getCurrentUser();
       }
     },
   },

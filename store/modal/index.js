@@ -2,12 +2,12 @@ import { handleModalState } from '~/utils/utils.js'
 
 export const state = () => ({
   createRoomModal: false,
-  createUserModal: false
+  userModal: false
 })
 
 export const getters = {
   createRoomModal: state => state.createRoomModal,
-  createUserModal: state => state.createUserModal
+  userModal: state => state.userModal
 }
 
 export const mutations = {
@@ -16,8 +16,8 @@ export const mutations = {
     state.createRoomModal = value;
   },
 
-  handleCreateUserModalState(state, value) {
+  handleUserModalState(state, value) {
     handleModalState(value)
-    state.createUserModal = value;
+    state.userModal = value;
   }
 }

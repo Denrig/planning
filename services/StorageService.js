@@ -13,7 +13,7 @@ export const StorageService = {
 
   getFromStorage(key) {
     if (process.client) {
-      localStorage.getItem(key)
+      return localStorage.getItem(key);
     }
   }
 }

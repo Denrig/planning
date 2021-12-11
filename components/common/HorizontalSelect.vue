@@ -1,5 +1,5 @@
 <template lang="pug">
-.horizontal-select.w-100(v-dragscroll="true")
+.horizontal-select.w-100(v-dragscroll="true", ref="horizontalSelect")
   .item(v-for="item in items", @click="handleSelectItem($event, item)")
     slot(:item="item")
 </template>
@@ -16,7 +16,7 @@ export default {
 
   methods: {
     handleSelectItem(event, item) {
-      const previous = document.getElementsByClassName("selected")[0];
+      const previous = this.$refs.horizontalSelect.querySelector(".selected");
       if (previous) previous.classList.remove("selected");
 
       const target = event.target;

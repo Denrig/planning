@@ -2,22 +2,37 @@ import { TYPES } from './userTypes';
 import { StorageService } from '~/services/StorageService';
 import { notifyRequestError, notifySuccess } from '~/utils/notificationsUtils.js';
 
-const USER_PROFILE_KEY = "userProfile"
+const USER_ID_KEY = "userId"
 
 export const state = () => ({
-  currentUser: StorageService.getFromStorage(USER_PROFILE_KEY)
+  currentUserId: null,
+  currentUser: {}
 });
 
 export const getters = {
   currentUser: (state) => state.currentUser,
+  currentUserId: (state) => state.currentUserId,
 };
 
 export const actions = {
+  getCurrentUser({ state, commit }) {
+    commit(TYPES.USER_REQUEST);
+    return this.$api.users
+      .getCurrentUser(state.currentUserId)
+      .then(response => {
+        commit(TYPES.SET_CURRENT_USER, response)
+      })
+      .catch((errors) => {
+        commit(TYPES.USER_ERROR, errors);
+      });
+  },
+
   createUser({ commit }, payload) {
     commit(TYPES.USER_REQUEST);
     return this.$api.users
       .createUser(payload)
       .then((response) => {
+        notifySuccess(this, 'Welcome to the party!')
         commit(TYPES.SET_CURRENT_USER, response);
       })
       .catch((errors) => {
@@ -43,7 +58,10 @@ export const mutations = {
   [TYPES.SET_CURRENT_USER](state, user) {
     state.userLoading = false;
     state.currentUser = user;
-    StorageService.saveToStorage(SESSION_ID_KEY, user.id)
-    notifySuccess(this, 'Your user is now open!');
+    StorageService.saveToStorage(USER_ID_KEY, user.id)
   },
+
+  setCurrentUserId(state) {
+    state.currentUserId = StorageService.getFromStorage(USER_ID_KEY);
+  }
 };
