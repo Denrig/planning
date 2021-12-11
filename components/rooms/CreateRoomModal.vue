@@ -23,6 +23,7 @@
                 )
                   input.w-100(
                     type="string",
+                    v-model="form.name"
                     placeholder="Room's name",
                     :class="{ invalid: invalid && dirty }"
                   )
@@ -36,6 +37,7 @@
                 )
                   input(
                     type="number",
+                    v-model="form.players_count"
                     placeholder="Players Count",
                     :class="{ invalid: invalid && dirty }"
                   )
@@ -50,13 +52,14 @@
                   b-form-checkbox(
                     type="checkbox",
                     size="lg",
+                    v-model="form.is_private"
                     :class="{ invalid: invalid && dirty }"
                   )
             b-row
-              button.app-button.w-100 Create Room!
+              button(@click="handleCreateRoom").app-button.w-100 Create Room!
 </template>
 <script>
-import { mapGetters, mapMutations } from 'vuex';
+import { mapGetters, mapMutations, mapActions } from 'vuex';
 import Modal from '@/components/common/Modal.vue';
 
 export default {
@@ -64,9 +67,16 @@ export default {
     Modal,
   },
 
+  data() {
+    return {
+      form: {},
+    };
+  },
+
   computed: {
     ...mapGetters({
       createRoomModal: 'modal/createRoomModal',
+      currentRoom: 'room/currentRoom',
     }),
   },
 
@@ -74,8 +84,14 @@ export default {
     ...mapMutations({
       handleCreateRoomModalState: 'modal/handleCreateRoomModalState',
     }),
+    ...mapActions({
+      createRoom: 'room/createRoom',
+    }),
 
-    handleCreateRoom() {},
+    handleCreateRoom() {
+      this.createRoom({ room: this.form }).then((response) => {
+      });
+    },
   },
 };
 </script>

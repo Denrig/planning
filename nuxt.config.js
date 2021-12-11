@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 export default {
   head: {
     title: 'Poker Planning',
@@ -25,6 +27,11 @@ export default {
       '~assets/styles/imported/include-media.scss',
     ],
   },
+  publicRuntimeConfig: {
+    axios: {
+      baseURL: process.env.BASE_URL,
+    },
+  },
 
   plugins: [
     {
@@ -38,6 +45,9 @@ export default {
       src: '~/plugins/notifications',
       mode: 'client',
     },
+    {
+      src: '~/plugins/api',
+    },
   ],
 
   components: true,
@@ -47,6 +57,7 @@ export default {
   ],
 
   modules: [
+    '@nuxtjs/axios',
     'bootstrap-vue/nuxt',
   ],
 
