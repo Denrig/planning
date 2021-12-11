@@ -23,7 +23,7 @@
                 )
                   input.w-100(
                     type="string",
-                    v-model="form.name"
+                    v-model="form.name",
                     placeholder="Room's name",
                     :class="{ invalid: invalid && dirty }"
                   )
@@ -37,7 +37,7 @@
                 )
                   input(
                     type="number",
-                    v-model="form.players_count"
+                    v-model="form.players_count",
                     placeholder="Players Count",
                     :class="{ invalid: invalid && dirty }"
                   )
@@ -52,15 +52,15 @@
                   b-form-checkbox(
                     type="checkbox",
                     size="lg",
-                    v-model="form.is_private"
+                    v-model="form.is_private",
                     :class="{ invalid: invalid && dirty }"
                   )
             b-row
-              button(@click="handleCreateRoom").app-button.w-100 Create Room!
+              button.app-button.w-100(@click="handleCreateRoom") Create Room!
 </template>
 <script>
-import { mapGetters, mapMutations, mapActions } from 'vuex';
-import Modal from '@/components/common/Modal.vue';
+import { mapGetters, mapMutations, mapActions } from "vuex";
+import Modal from "@/components/common/Modal.vue";
 
 export default {
   components: {
@@ -75,21 +75,22 @@ export default {
 
   computed: {
     ...mapGetters({
-      createRoomModal: 'modal/createRoomModal',
-      currentRoom: 'room/currentRoom',
+      createRoomModal: "modal/createRoomModal",
+      currentRoom: "room/currentRoom",
     }),
   },
 
   methods: {
     ...mapMutations({
-      handleCreateRoomModalState: 'modal/handleCreateRoomModalState',
+      handleCreateRoomModalState: "modal/handleCreateRoomModalState",
     }),
     ...mapActions({
-      createRoom: 'room/createRoom',
+      createRoom: "room/createRoom",
     }),
 
     handleCreateRoom() {
       this.createRoom({ room: this.form }).then((response) => {
+        this.$router.push("voting-room");
       });
     },
   },

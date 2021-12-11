@@ -42,6 +42,10 @@ export default {
       mode: 'client',
     },
     {
+      src: '@/plugins/vue-dragscroll.js',
+      ssr: false
+    },
+    {
       src: '~/plugins/notifications',
       mode: 'client',
     },

@@ -47,6 +47,7 @@
 .app-button{
   color: $white;
   background-color: $grey;
+  font-weight: $bold;
   box-shadow: none;
   border: none;
 }
@@ -78,4 +79,10 @@
     margin: 10px auto;
     padding: 15px 0;
   }
+}
+
+.info-text {
+  font-size: $big-text;
+  font-weight: $bold;
+  margin: 3px auto
 }

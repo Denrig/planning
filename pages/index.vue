@@ -1,11 +1,10 @@
 <template lang="pug">
 .home-page
   CreateRoomModal
-  b-carousel.carousel(
-    id="carousel-fade"
-    fade
-    :interval="5000"
-    @sliding-start="onSlideStart"
+  b-carousel#carousel-fade.carousel(
+    fade,
+    :interval="5000",
+    @sliding-start="onSlideStart",
     @sliding-end="onSlideEnd"
   )
     b-carousel-slide(v-for="image in images")
@@ -21,18 +20,18 @@
         ValidationObserver(v-slot="{ handleSubmit }")
           form(@submit.prevent="handleSubmit(handleCheckCode)")
             ValidationProvider.input-group.text(
-              rules="required"
-              name="code"
-              v-slot="{ errors, invalid, dirty }"
+              rules="required",
+              name="code",
+              v-slot="{ errors, invalid, dirty }",
               tag="div"
             )
               label(for="input_email")
               input#code(
-                type="string"
-                placeholder="CODE"
-                v-model="code"
-                :maxlength="6"
-                :class="{'invalid': invalid && dirty }"
+                type="string",
+                placeholder="CODE",
+                v-model="code",
+                :maxlength="6",
+                :class="{ invalid: invalid && dirty }"
               )
     MenuItem.create-room-section(backgroundColor="#ffcf35")
       template(v-slot:header)
@@ -43,7 +42,7 @@
           span This section is used for creating a new planning room.
           span Click on the 'Create Room' button and you
           | will be redirected to the room creation page.
-        button.w-100.app-link.create-room-button.border-none(
+        button.w-100.app-button.create-room-button.border-none(
           @click="handleCreateRoomModalState(true)"
         ) Create Room
     MenuItem.rooms-list-section(backgroundColor="#4f4f4f")
@@ -59,10 +58,10 @@
 </template>>
 
 <script>
-import { BIcon } from 'bootstrap-vue';
-import { mapMutations } from 'vuex';
-import MenuItem from '@/components/home/MenuItem.vue';
-import CreateRoomModal from '@/components/rooms/CreateRoomModal.vue';
+import { BIcon } from "bootstrap-vue";
+import { mapMutations } from "vuex";
+import MenuItem from "@/components/home/MenuItem.vue";
+import CreateRoomModal from "@/components/rooms/CreateRoomModal.vue";
 
 export default {
   components: {
@@ -76,16 +75,16 @@ export default {
       slide: false,
       code: null,
       images: [
-        'https://images3.alphacoders.com/106/1069102.jpg',
-        'https://i.redd.it/v2cmfx8rbdv11.jpg',
-        'https://i.pinimg.com/originals/7d/98/84/7d98840fdff1b2e7cd508cc7f3a17403.jpg',
+        "https://images3.alphacoders.com/106/1069102.jpg",
+        "https://i.redd.it/v2cmfx8rbdv11.jpg",
+        "https://i.pinimg.com/originals/7d/98/84/7d98840fdff1b2e7cd508cc7f3a17403.jpg",
       ],
     };
   },
 
   methods: {
     ...mapMutations({
-      handleCreateRoomModalState: 'modal/handleCreateRoomModalState',
+      handleCreateRoomModalState: "modal/handleCreateRoomModalState",
     }),
 
     onSlideStart() {
@@ -96,8 +95,7 @@ export default {
       this.sliding = false;
     },
 
-    handleCheckCode() {
-    },
+    handleCheckCode() {},
   },
 };
 </script>
@@ -119,13 +117,14 @@ export default {
   .rooms-list-button {
     background-color: $yellow;
     color: $grey;
+    font-weight: $bold;
   }
 
-  .create-room-section{
+  .create-room-section {
     color: $grey;
   }
 
-  .rooms-list-section{
+  .rooms-list-section {
     color: $yellow;
   }
 
@@ -134,8 +133,8 @@ export default {
   }
 }
 
-@include media(">=desktop"){
-  .home-page{
+@include media(">=desktop") {
+  .home-page {
     flex-direction: column;
 
     .details-text {
@@ -158,9 +157,8 @@ export default {
   }
 }
 
-@include media("<desktop"){
-.home-page .menu-items-container
-   {
+@include media("<desktop") {
+  .home-page .menu-items-container {
     flex-direction: column;
     right: 0;
     height: 100%;

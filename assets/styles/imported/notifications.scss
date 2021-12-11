@@ -1,0 +1,13 @@
+.vue-notification-group{
+  width: 40vw !important;
+  left: calc(50% - 20vw) !important;
+  
+  .vue-notification { 
+    border: none;
+    font-family: $main-font;
+    font-size: $small-text;
+    font-weight: $bold;
+    margin: 10px;
+    border-radius: 10px;
+  }
+}

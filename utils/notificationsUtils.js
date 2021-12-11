@@ -7,19 +7,19 @@ export const notifyRequestError = (context, response) => {
     }
   }
 }
-export const notifyError = (context, message) =>{
+
+export const notifyError = (context, message) => {
   if (process.client) {
     context.$notify({
-      group: 'all',
       type: 'error',
       text: message
     })
   }
 }
-export const notifySuccess = (context, message) =>{
+
+export const notifySuccess = (context, message) => {
   if (process.client) {
     context.$notify({
-      group: 'all',
       type: 'success',
       text: message
     })
