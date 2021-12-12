@@ -1,12 +1,11 @@
 import { TYPES } from './userTypes';
+import { STORAGE_KEYS } from '~/static/storage-keys';
 import { StorageService } from '~/services/StorageService';
 import { notifyRequestError, notifySuccess } from '~/utils/notificationsUtils.js';
 
-const USER_ID_KEY = "userId"
-
 export const state = () => ({
   currentUserId: null,
-  currentUser: {}
+  currentUser: {},
 });
 
 export const getters = {
@@ -19,8 +18,8 @@ export const actions = {
     commit(TYPES.USER_REQUEST);
     return this.$api.users
       .getCurrentUser(state.currentUserId)
-      .then(response => {
-        commit(TYPES.SET_CURRENT_USER, response)
+      .then((response) => {
+        commit(TYPES.SET_CURRENT_USER, response);
       })
       .catch((errors) => {
         commit(TYPES.USER_ERROR, errors);
@@ -32,7 +31,7 @@ export const actions = {
     return this.$api.users
       .createUser(payload)
       .then((response) => {
-        notifySuccess(this, 'Welcome to the party!')
+        notifySuccess(this, 'Welcome to the party!');
         commit(TYPES.SET_CURRENT_USER, response);
       })
       .catch((errors) => {
@@ -58,10 +57,10 @@ export const mutations = {
   [TYPES.SET_CURRENT_USER](state, user) {
     state.userLoading = false;
     state.currentUser = user;
-    StorageService.saveToStorage(USER_ID_KEY, user.id)
+    StorageService.saveToStorage(STORAGE_KEYS.USER_ID_KEY, user.id);
   },
 
   setCurrentUserId(state) {
-    state.currentUserId = StorageService.getFromStorage(USER_ID_KEY);
-  }
+    state.currentUserId = StorageService.getFromStorage(STORAGE_KEYS.USER_ID_KEY);
+  },
 };

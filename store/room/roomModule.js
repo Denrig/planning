@@ -1,8 +1,7 @@
 import { TYPES } from './roomTypes';
+import { STORAGE_KEYS } from '~/static/storage-keys';
 import { StorageService } from '~/services/StorageService';
 import { notifyRequestError, notifySuccess } from '~/utils/notificationsUtils.js';
-
-const SESSION_ID_KEY = "sessionId"
 
 export const state = () => ({
   rooms: [],
@@ -46,7 +45,8 @@ export const mutations = {
   [TYPES.SET_CURRENT_ROOM](state, room) {
     state.roomLoading = false;
     state.currentRoom = room;
-    StorageService.saveToStorage(SESSION_ID_KEY, room.id)
+    StorageService.saveToStorage(STORAGE_KEYS.SESSION_ID_KEY, room.id);
+    StorageService.saveToStorage(STORAGE_KEYS.USER_ID_KEY, room.users[0].id);
     notifySuccess(this, 'Your room is now open!');
   },
 };

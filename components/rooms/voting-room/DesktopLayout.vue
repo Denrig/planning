@@ -8,12 +8,13 @@
   //- .result
 </template>
 <script>
-import VotingBar from "@/components/rooms/voting-room/desktop/VotingBar.vue";
-import TasksSection from "@/components/rooms/voting-room/desktop/TasksSection.vue";
-import Player from "@/components/rooms/voting-room/Player.vue";
-import { mapActions, mapGetters, mapMutations } from "vuex";
+import { mapActions, mapGetters, mapMutations } from 'vuex';
+import VotingBar from '@/components/rooms/voting-room/desktop/VotingBar.vue';
+import TasksSection from '@/components/rooms/voting-room/desktop/TasksSection.vue';
+import Player from '@/components/rooms/voting-room/Player.vue';
+
 export default {
-  name: "DesktopLayout",
+  name: 'DesktopLayout',
 
   components: {
     VotingBar,
@@ -23,7 +24,7 @@ export default {
 
   computed: {
     ...mapGetters({
-      currentUserId: "user/currentUserId",
+      currentUserId: 'user/currentUserId',
     }),
   },
 
@@ -33,10 +34,10 @@ export default {
 
   methods: {
     ...mapMutations({
-      handleUserModalState: "modal/handleUserModalState",
+      handleUserModalState: 'modal/handleUserModalState',
     }),
     ...mapActions({
-      getCurrentUser: "user/getCurrentUser",
+      getCurrentUser: 'user/getCurrentUser',
     }),
 
     checkCurrentUser() {
