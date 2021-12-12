@@ -7,6 +7,8 @@
     v-show="userModal",
     :showCloseButton="false"
   )
+    template(v-slot:modal-header)
+      h1.info-text User Info
     template(v-slot:modal-body)
       ValidationObserver(v-slot="{ handleSubmit }")
         form(@submit.prevent="handleSubmit(handleUserAction)")
@@ -28,7 +30,8 @@
             label.info-text Choose Your Character Image
             HorizontalSelect.character-select(
               :items="characterImages",
-              @itemSelected="handlePhotoChange"
+              @itemSelected="handlePhotoChange",
+              ref="characterSelect"
             )
               template(v-slot:default="props")
                 img(
@@ -37,7 +40,7 @@
                   width=100
                 )
 
-          b-row
+          b-row(v-if="withRoles")
             label.info-text Choose Your Role
             HorizontalSelect.role-select(
               :items="userRoles",
@@ -51,7 +54,7 @@
                 )
                 .role-name {{ props.item.role }}
           b-row 
-            button.app-button.w-100.start-voting(@click="handleUserAction") Start Voting!
+            button.app-button.w-100.start-voting(@click="handleUserAction") Let's Go!
 </template>
 <script>
 import { mapGetters, mapActions } from "vuex";
@@ -65,6 +68,17 @@ export default {
   components: {
     Modal,
     HorizontalSelect,
+  },
+
+  props: {
+    withRoles: {
+      type: Boolean,
+      default: true,
+    },
+    action: {
+      type: String,
+      default: "create",
+    },
   },
 
   data() {
@@ -84,6 +98,19 @@ export default {
     };
   },
 
+  watch: {
+    userModal() {
+      if (this.action === "update") {
+        this.getCurrentUser().then(() => {
+          this.form = JSON.parse(JSON.stringify(this.currentUser));
+          this.$refs.characterSelect.selectByIndex(
+            CHARACTER_IMAGES.indexOf(this.form.character_image)
+          );
+        });
+      }
+    },
+  },
+
   computed: {
     ...mapGetters({
       userModal: "modal/userModal",
@@ -95,14 +122,18 @@ export default {
     ...mapActions({
       handleUserModalState: "modal/handleUserModal",
       createUser: "user/createUser",
+      updateUser: "user/updateUser",
+      getCurrentUser: "user/getCurrentUser",
     }),
 
     handleUserAction() {
-      this.handleCreateUser();
-    },
+      if (this.action === "create") {
+        this.createUser({ user: this.form });
+      } else {
+        this.updateUser({ user: this.form });
+      }
 
-    handleCreateUser() {
-      this.createUser({ user: this.form });
+      this.$emit("completed");
     },
 
     handlePhotoChange(image) {

@@ -15,8 +15,9 @@ export const getters = {
 };
 
 export const actions = {
-  createRoom({ commit }, payload) {
+  createRoom({ commit, rootState }, payload) {
     commit(TYPES.ROOM_REQUEST);
+    payload.user_id = rootState.user.currentUserId
     return this.$api.rooms
       .createRoom(payload)
       .then((response) => {
@@ -46,7 +47,6 @@ export const mutations = {
     state.roomLoading = false;
     state.currentRoom = room;
     StorageService.saveToStorage(STORAGE_KEYS.SESSION_ID_KEY, room.id);
-    StorageService.saveToStorage(STORAGE_KEYS.USER_ID_KEY, room.users[0].id);
     notifySuccess(this, 'Your room is now open!');
   },
 };

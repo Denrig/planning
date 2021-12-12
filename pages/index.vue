@@ -1,6 +1,11 @@
 <template lang="pug">
 .home-page
   CreateRoomModal
+  UserModal(
+    :withRoles="withRoles",
+    :action="action",
+    @completed="handleUserActionCompleted"
+  )
   b-carousel#carousel-fade.carousel(
     fade,
     :interval="5000",
@@ -43,7 +48,7 @@
           span Click on the 'Create Room' button and you
           | will be redirected to the room creation page.
         button.w-100.app-button.create-room-button.border-none(
-          @click="handleCreateRoomModalState(true)"
+          @click="handleCreateRoomClicked"
         ) Create Room
     MenuItem.rooms-list-section(backgroundColor="#4f4f4f")
       template(v-slot:header)
@@ -59,21 +64,25 @@
 
 <script>
 import { BIcon } from "bootstrap-vue";
-import { mapMutations } from "vuex";
+import { mapMutations, mapGetters } from "vuex";
 import MenuItem from "@/components/home/MenuItem.vue";
 import CreateRoomModal from "@/components/rooms/CreateRoomModal.vue";
+import UserModal from "@/components/rooms/voting-room/UserModal.vue";
 
 export default {
   components: {
     MenuItem,
     BIcon,
     CreateRoomModal,
+    UserModal,
   },
 
   data() {
     return {
       slide: false,
       code: null,
+      withRoles: true,
+      action: "create",
       images: [
         "https://images3.alphacoders.com/106/1069102.jpg",
         "https://i.redd.it/v2cmfx8rbdv11.jpg",
@@ -82,9 +91,21 @@ export default {
     };
   },
 
+  created() {
+    this.setCurrentUserId();
+  },
+
+  computed: {
+    ...mapGetters({
+      currentUserId: "user/currentUserId",
+    }),
+  },
+
   methods: {
     ...mapMutations({
       handleCreateRoomModalState: "modal/handleCreateRoomModalState",
+      handleUserModalState: "modal/handleUserModalState",
+      setCurrentUserId: "user/setCurrentUserId",
     }),
 
     onSlideStart() {
@@ -93,6 +114,18 @@ export default {
 
     onSlideEnd() {
       this.sliding = false;
+    },
+
+    handleCreateRoomClicked() {
+      this.withRoles = false;
+      this.action = this.currentUserId ? "update" : "create";
+
+      this.handleUserModalState(true);
+    },
+
+    handleUserActionCompleted() {
+      this.handleUserModalState(false);
+      this.handleCreateRoomModalState(true);
     },
 
     handleCheckCode() {},

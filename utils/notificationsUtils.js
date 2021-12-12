@@ -1,9 +1,9 @@
 export const notifyRequestError = (context, response) => {
   if (response) {
-    if (response.data.error_messages) {
+    if (response.data && response.data.error_messages) {
       notifyError(context, response.data.error_messages.join('<br>'))
     } else {
-      notifyError(context, response.data.message)
+      notifyError(context, 'An error occured please try again later!')
     }
   }
 }

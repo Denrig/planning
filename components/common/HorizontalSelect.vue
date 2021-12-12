@@ -27,6 +27,12 @@ export default {
 
       this.$emit("itemSelected", item);
     },
+
+    selectByIndex(index) {
+      const horizontalSelect = this.$refs.horizontalSelect;
+      const element = horizontalSelect.children[index];
+      if (element) element.classList.add("selected");
+    },
   },
 };
 </script>

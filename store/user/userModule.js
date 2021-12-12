@@ -38,6 +38,19 @@ export const actions = {
         commit(TYPES.USER_ERROR, errors);
       });
   },
+
+  updateUser({ commit }, payload) {
+    commit(TYPES.USER_REQUEST);
+    return this.$api.users
+      .updateUser(payload)
+      .then((response) => {
+        notifySuccess(this, 'Your info is saved! We got you!');
+        commit(TYPES.SET_CURRENT_USER, response);
+      })
+      .catch((errors) => {
+        commit(TYPES.USER_ERROR, errors);
+      });
+  },
 };
 
 export const mutations = {
