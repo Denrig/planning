@@ -115,25 +115,31 @@ export default {
     ...mapGetters({
       userModal: "modal/userModal",
       currentUser: "user/currentUser",
+      currentRoom: "room/currentRoom",
     }),
   },
 
   methods: {
     ...mapActions({
-      handleUserModalState: "modal/handleUserModal",
       createUser: "user/createUser",
       updateUser: "user/updateUser",
+      handleUserModalState: "modal/handleUserModal",
       getCurrentUser: "user/getCurrentUser",
+      joinRoom: "room/joinRoom",
     }),
 
     handleUserAction() {
+      let action = null;
       if (this.action === "create") {
-        this.createUser({ user: this.form });
+        action = this.createUser({ user: this.form });
       } else {
-        this.updateUser({ user: this.form });
+        action = this.updateUser({ user: this.form });
       }
 
-      this.$emit("completed");
+      action.then(() => {
+        this.joinRoomWithRole(action);
+        this.$emit("completed");
+      });
     },
 
     handlePhotoChange(image) {
@@ -142,6 +148,16 @@ export default {
 
     handleRoleSelect(role) {
       this.form.role = role.role;
+    },
+
+    joinRoomWithRole() {
+      const joinRoomPayload = {
+        user_id: this.currentUser.id,
+        room_id: this.currentRoom.id,
+        role: this.form.role,
+      };
+
+      this.joinRoom(joinRoomPayload);
     },
   },
 };

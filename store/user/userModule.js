@@ -36,6 +36,7 @@ export const actions = {
       })
       .catch((errors) => {
         commit(TYPES.USER_ERROR, errors);
+        return Promise.reject(errors);
       });
   },
 
@@ -49,6 +50,7 @@ export const actions = {
       })
       .catch((errors) => {
         commit(TYPES.USER_ERROR, errors);
+        return Promise.reject(errors);
       });
   },
 };
@@ -64,7 +66,7 @@ export const mutations = {
 
   [TYPES.USER_ERROR](state, errors) {
     state.userLoading = false;
-    notifyRequestError(this, errors);
+    notifyRequestError(this, errors.response);
   },
 
   [TYPES.SET_CURRENT_USER](state, user) {

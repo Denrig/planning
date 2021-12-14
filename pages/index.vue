@@ -64,10 +64,10 @@
 
 <script>
 import { BIcon } from "bootstrap-vue";
-import { mapMutations, mapGetters } from "vuex";
+import { mapMutations, mapGetters, mapActions } from "vuex";
 import MenuItem from "@/components/home/MenuItem.vue";
 import CreateRoomModal from "@/components/rooms/CreateRoomModal.vue";
-import UserModal from "@/components/rooms/voting-room/UserModal.vue";
+import UserModal from "@/components/users/UserModal.vue";
 
 export default {
   components: {
@@ -82,7 +82,7 @@ export default {
       slide: false,
       code: null,
       withRoles: true,
-      action: "create",
+      isCreateRoom: false,
       images: [
         "https://images3.alphacoders.com/106/1069102.jpg",
         "https://i.redd.it/v2cmfx8rbdv11.jpg",
@@ -99,6 +99,10 @@ export default {
     ...mapGetters({
       currentUserId: "user/currentUserId",
     }),
+
+    action() {
+      return this.currentUserId ? "update" : "create";
+    },
   },
 
   methods: {
@@ -106,6 +110,10 @@ export default {
       handleCreateRoomModalState: "modal/handleCreateRoomModalState",
       handleUserModalState: "modal/handleUserModalState",
       setCurrentUserId: "user/setCurrentUserId",
+    }),
+
+    ...mapActions({
+      getRoomByCode: "room/getRoomByCode",
     }),
 
     onSlideStart() {
@@ -117,18 +125,26 @@ export default {
     },
 
     handleCreateRoomClicked() {
+      this.isCreateRoom = true;
       this.withRoles = false;
-      this.action = this.currentUserId ? "update" : "create";
-
       this.handleUserModalState(true);
     },
 
     handleUserActionCompleted() {
-      this.handleUserModalState(false);
-      this.handleCreateRoomModalState(true);
+      if (this.isCreateRoom) {
+        this.handleUserModalState(false);
+        this.handleCreateRoomModalState(true);
+      } else {
+        this.$router.push("voting-room");
+      }
     },
 
-    handleCheckCode() {},
+    handleCheckCode() {
+      this.isCreateRoom = false;
+      this.getRoomByCode(this.code).then(() => {
+        this.handleUserModalState(true);
+      });
+    },
   },
 };
 </script>

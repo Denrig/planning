@@ -25,8 +25,35 @@ export const actions = {
       })
       .catch((errors) => {
         commit(TYPES.ROOM_ERROR, errors);
+        return Promise.reject(errors);
       });
   },
+
+  getRoomByCode({ commit }, payload) {
+    commit(TYPES.ROOM_REQUEST);
+
+    return this.$api.rooms
+      .getRoomByCode(payload)
+      .then((response) => {
+        commit(TYPES.SET_CURRENT_ROOM, response)
+      })
+      .catch((errors) => {
+        commit(TYPES.ROOM_ERROR, errors);
+        return Promise.reject(errors);
+      })
+  },
+
+  joinRoom({ commit }, payload) {
+    commit(TYPES.ROOM_REQUEST);
+    return this.$api.rooms
+      .joinRoom(payload)
+      .then((response) => {
+        commit(TYPES.ROOM_SUCCESS);
+      })
+      .catch((errors) => {
+        commit(TYPES.ROOM_ERROR, errors);
+      })
+  }
 };
 
 export const mutations = {
@@ -40,13 +67,12 @@ export const mutations = {
 
   [TYPES.ROOM_ERROR](state, errors) {
     state.roomLoading = false;
-    notifyRequestError(this, errors);
+    notifyRequestError(this, errors.response);
   },
 
   [TYPES.SET_CURRENT_ROOM](state, room) {
     state.roomLoading = false;
     state.currentRoom = room;
     StorageService.saveToStorage(STORAGE_KEYS.SESSION_ID_KEY, room.id);
-    notifySuccess(this, 'Your room is now open!');
   },
 };

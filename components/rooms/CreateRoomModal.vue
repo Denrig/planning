@@ -61,6 +61,7 @@
 <script>
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import Modal from "@/components/common/Modal.vue";
+import { notifySuccess } from "~/utils/notificationsUtils.js";
 
 export default {
   components: {
@@ -90,6 +91,7 @@ export default {
 
     handleCreateRoom() {
       this.createRoom({ room: this.form }).then((response) => {
+        notifySuccess(this, "Your room is now open!");
         this.$router.push("voting-room");
       });
     },

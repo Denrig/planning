@@ -7,7 +7,6 @@
 import { mapGetters, mapActions } from "vuex";
 import DesktopLayout from "@/components/rooms/voting-room/DesktopLayout.vue";
 import MobileLayout from "@/components/rooms/voting-room/MobileLayout.vue";
-import UserModal from "@/components/rooms/voting-room/UserModal.vue";
 
 export default {
   components: {
@@ -32,5 +31,3 @@ export default {
   },
 };
 </script>
-<style lang="scss">
-</style>
