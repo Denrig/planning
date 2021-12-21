@@ -4,7 +4,7 @@ const RoomsRepository = (axios) => ({
   },
 
   getRoomByCode(code) {
-    return axios.get(`v1/join_rooms/${code}`).then((resp) => resp.data);
+    return axios.get(`v1/join_room/${code}`).then((resp) => resp.data);
   },
 
   joinRoom(payload) {
