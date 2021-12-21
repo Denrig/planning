@@ -18,7 +18,7 @@
               )
                 input.w-100(
                   type="string",
-                  v-model="form.title",
+                  v-model="form.text",
                   placeholder="Task's title",
                   :class="{ invalid: invalid && dirty }"
                 )
@@ -33,33 +33,36 @@
     .title.h-100 {{ task.title }}
 </template>
 <script>
+import { mapGetters, mapActions } from "vuex";
+
 export default {
-  name: 'TasksSection',
+  name: "TasksSection",
 
   data() {
     return {
       form: {},
-      tasks: [
-        {
-          id: 1,
-          title: 'Bartai titlu pentru taskuri',
-        },
-        {
-          id: 2,
-          title:
-            'Bartai titlu pentru taskuri care e ceva mai lung in panina masii si a lui hristos',
-        },
-      ],
       addTaskEnabled: false,
     };
   },
 
+  computed: {
+    ...mapGetters({
+      currentRoom: "room/currentRoom",
+      tasks: "task/tasks",
+    }),
+  },
+
   methods: {
+    ...mapActions({
+      createTasksForRoom: "task/createTasksForRoom",
+    }),
+
     handleAddTask() {
-      this.form.id = this.tasks.length + 1;
-      this.tasks.unshift(this.form);
-      this.form = {};
-      this.addTaskEnabled = false;
+      this.form.room_id = this.currentRoom.id;
+      this.createTasksForRoom(this.form).then(() => {
+        this.from = {};
+        this.addTaskEnabled = false;
+      });
     },
 
     handleFormState(value) {

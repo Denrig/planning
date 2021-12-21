@@ -3,6 +3,9 @@
   width: 100px;
   height: 150px;
   margin: 10px;
+  transition: 0.5s;
+  transform: scale(0.9);
+  filter: grayscale(100%);
 
   .vote-display {
     position: relative;
@@ -15,6 +18,11 @@
       animation: vote 2s;
       animation-fill-mode: forwards;
     }
+  }
+
+  &.voted {
+    filter: none;
+    transform: scale(1);
   }
 }
 

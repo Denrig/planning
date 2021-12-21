@@ -21,12 +21,14 @@ export default {
   },
 
   mounted() {
+    this.getCurrentRoom();
     this.initLayoutModule();
   },
 
   methods: {
     ...mapActions({
       initLayoutModule: "layout/initLayoutModule",
+      getCurrentRoom: "room/getCurrentRoom",
     }),
   },
 };

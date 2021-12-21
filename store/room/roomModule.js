@@ -53,6 +53,18 @@ export const actions = {
       .catch((errors) => {
         commit(TYPES.ROOM_ERROR, errors);
       })
+  },
+
+  getCurrentRoom({ commit }) {
+    return this.$api.rooms
+      .getCurrentRoom(StorageService.getFromStorage(STORAGE_KEYS.SESSION_ID_KEY))
+      .then((response) => {
+        commit(TYPES.SET_CURRENT_ROOM, response)
+      })
+      .catch((errors) => {
+        commit(TYPES.ROOM_ERROR, errors);
+        return Promise.reject(errors);
+      })
   }
 };
 

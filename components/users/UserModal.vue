@@ -123,8 +123,8 @@ export default {
     ...mapActions({
       createUser: "user/createUser",
       updateUser: "user/updateUser",
-      handleUserModalState: "modal/handleUserModal",
       getCurrentUser: "user/getCurrentUser",
+      handleUserModalState: "modal/handleUserModal",
       joinRoom: "room/joinRoom",
     }),
 
@@ -137,7 +137,7 @@ export default {
       }
 
       action.then(() => {
-        this.joinRoomWithRole(action);
+        if (this.withRoles) this.joinRoomWithRole(action);
         this.$emit("completed");
       });
     },
