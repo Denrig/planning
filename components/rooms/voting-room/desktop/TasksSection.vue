@@ -30,13 +30,13 @@
             b-col
               button.app-button.w-100.create-task(@click="handleAddTask") Add!
   .task(v-for="task in tasks", :key="task.id")
-    .title.h-100 {{ task.title }}
+    .title.h-100 {{ task.text }}
 </template>
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
-  name: "TasksSection",
+  name: 'TasksSection',
 
   data() {
     return {
@@ -47,14 +47,14 @@ export default {
 
   computed: {
     ...mapGetters({
-      currentRoom: "room/currentRoom",
-      tasks: "task/tasks",
+      currentRoom: 'room/currentRoom',
+      tasks: 'task/tasks',
     }),
   },
 
   methods: {
     ...mapActions({
-      createTasksForRoom: "task/createTasksForRoom",
+      createTasksForRoom: 'task/createTasksForRoom',
     }),
 
     handleAddTask() {

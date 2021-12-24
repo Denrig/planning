@@ -43,7 +43,7 @@ export default {
     },
     {
       src: '@/plugins/vue-dragscroll.js',
-      ssr: false
+      ssr: false,
     },
     {
       src: '~/plugins/notifications',
@@ -51,6 +51,10 @@ export default {
     },
     {
       src: '~/plugins/api',
+    },
+    {
+      src: '~/plugins/actioncable.js',
+      mode: 'client',
     },
   ],
 

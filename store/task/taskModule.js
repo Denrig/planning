@@ -14,16 +14,19 @@ export const actions = {
   getTasksForRoom({ commit }, roomId) {
     return this.$api.tasks
       .getTasksForRoom(roomId)
-      .then(tasks => commit(TYPES.SET_TASKS, tasks))
-      .catch(errors => commit(TYPES.TASK_ERROR, errors))
+      .then((tasks) => commit(TYPES.SET_TASKS, tasks))
+      .catch((errors) => commit(TYPES.TASK_ERROR, errors));
   },
 
   createTasksForRoom({ commit }, payload) {
     return this.$api.tasks
       .createTask(payload)
-      .then(tasks => commit(TYPES.TASK_SUCCESS))
-      .catch(errors => commit(TYPES.TASK_ERROR, errors))
-  }
+      .then(() => commit(TYPES.TASK_SUCCESS))
+      .catch((errors) => commit(TYPES.TASK_ERROR, errors));
+  },
+  addTask({ commit }, task) {
+    commit(TYPES.ADD_TASK, task);
+  },
 };
 
 export const mutations = {
@@ -43,5 +46,9 @@ export const mutations = {
   [TYPES.SET_TASKS](state, tasks) {
     state.taskLoading = false;
     state.tasks = tasks;
+  },
+  [TYPES.ADD_TASK](state, task) {
+    debugger;
+    state.tasks.unshift(task);
   },
 };
