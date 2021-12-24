@@ -48,7 +48,6 @@ export const mutations = {
     state.tasks = tasks;
   },
   [TYPES.ADD_TASK](state, task) {
-    debugger;
     state.tasks.unshift(task);
   },
 };

@@ -7,6 +7,7 @@ export const state = () => ({
   rooms: [],
   currentRoom: {},
   roomLoading: false,
+  currentVote: null,
 });
 
 export const getters = {
@@ -17,7 +18,7 @@ export const getters = {
 export const actions = {
   createRoom({ commit, rootState }, payload) {
     commit(TYPES.ROOM_REQUEST);
-    payload.user_id = rootState.user.currentUserId
+    payload.user_id = rootState.user.currentUserId;
     return this.$api.rooms
       .createRoom(payload)
       .then((response) => {
@@ -35,12 +36,12 @@ export const actions = {
     return this.$api.rooms
       .getRoomByCode(payload)
       .then((response) => {
-        commit(TYPES.SET_CURRENT_ROOM, response)
+        commit(TYPES.SET_CURRENT_ROOM, response);
       })
       .catch((errors) => {
         commit(TYPES.ROOM_ERROR, errors);
         return Promise.reject(errors);
-      })
+      });
   },
 
   joinRoom({ commit }, payload) {
@@ -52,20 +53,24 @@ export const actions = {
       })
       .catch((errors) => {
         commit(TYPES.ROOM_ERROR, errors);
-      })
+      });
   },
 
   getCurrentRoom({ commit }) {
     return this.$api.rooms
       .getCurrentRoom(StorageService.getFromStorage(STORAGE_KEYS.SESSION_ID_KEY))
       .then((response) => {
-        commit(TYPES.SET_CURRENT_ROOM, response)
+        commit(TYPES.SET_CURRENT_ROOM, response);
       })
       .catch((errors) => {
         commit(TYPES.ROOM_ERROR, errors);
         return Promise.reject(errors);
-      })
-  }
+      });
+  },
+
+  addUserToRoom({ commit }, user) {
+    commit(TYPES.ADD_USER_TO_ROOM, user);
+  },
 };
 
 export const mutations = {
@@ -86,5 +91,13 @@ export const mutations = {
     state.roomLoading = false;
     state.currentRoom = room;
     StorageService.saveToStorage(STORAGE_KEYS.SESSION_ID_KEY, room.id);
+  },
+
+  [TYPES.ADD_USER_TO_ROOM](state, user) {
+    state.currentRoom.room_attendances.push(user);
+  },
+
+  setCurrentVote(state, vote) {
+    state.currentVote = vote;
   },
 };

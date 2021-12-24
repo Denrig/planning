@@ -5,10 +5,12 @@
     @click="handleCancelVote"
     :style="{ visibility: hasVoted ? 'initial' : 'hidden' }"
   ) Cancel Vote
-  .card(v-for="card in cards" @click="handleCardClicked($event)" :key="card") {{ card }}
+  .card(v-for="card in cards" @click="handleCardClicked($event, card)" :key="card") {{ card }}
 
 </template>
 <script>
+import { mapState, mapMutations } from 'vuex';
+
 export default {
   name: 'VotingBar',
   data() {
@@ -17,22 +19,32 @@ export default {
       cards: [0.5, 1, 3, 5, 8, 13, 21, '?'],
     };
   },
+
+  computed: mapState({
+    currentVote: 'room/currentVote',
+  }),
+
   methods: {
-    handleCardClicked(event) {
+    ...mapMutations({ setCurrentVote: 'room/setCurrentVote' }),
+
+    handleCardClicked(event, card) {
+      this.hasVoted = true;
+      this.setCurrentVote(card);
+
       const coords = event.target.getBoundingClientRect();
       const { indicator } = this.$refs;
       indicator.style.left = `${coords.x}px`;
-      this.hasVoted = true;
-      this.handleSelectNumber(event.target);
+      this.handleIndicator(event.target);
     },
 
-    handleSelectNumber(currentElement) {
+    handleIndicator(currentElement) {
       this.removeCurrentActiveClass();
       currentElement.classList.add('active');
     },
 
     handleCancelVote() {
       this.hasVoted = false;
+      this.setCurrentVote(null);
       this.removeCurrentActiveClass();
       this.$refs.indicator.style.left = '5vw';
     },
