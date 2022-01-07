@@ -9,7 +9,6 @@ export const state = () => ({
   currentRoom: {},
   players: [],
   roomLoading: false,
-  currentVote: null,
   showVotes: false,
 });
 
@@ -17,6 +16,7 @@ export const getters = {
   rooms: (state) => state.rooms,
   currentRoom: (state) => state.currentRoom,
   players: (state) => state.players,
+  getPlayer: (state) => (id) => state.players.find((player) => player.id === id),
 };
 
 export const actions = {
@@ -65,7 +65,7 @@ export const actions = {
       .getCurrentRoom(StorageService.getFromStorage(STORAGE_KEYS.SESSION_ID_KEY))
       .then((response) => {
         commit(TYPES.SET_CURRENT_ROOM, response);
-        commit(TYPES.SET_PLAYERS, response.room_attendances);
+        commit(TYPES.SET_PLAYERS, response.players);
         commit('task/SET_TASKS', response.tasks, { root: true });
       })
       .catch((errors) => {
@@ -108,11 +108,18 @@ export const mutations = {
   },
 
   [TYPES.PLAYER_VOTED](state, data) {
-    const { user } = state
+    const user = state
       .players
-      .find((player) => player.user.id === data.vote.user_id);
+      .find((player) => player.id === data.vote.user_id);
 
     Vue.set(user, 'voted', data.voted);
-    Vue.set(user, 'vote', data.vote);
+    Vue.set(user, 'vote', data.vote.vote);
+  },
+
+  [TYPES.CLEAR_VOTES](state) {
+    state.players.forEach((player) => {
+      Vue.set(player, 'voted', false);
+      Vue.set(player, 'vote', null);
+    });
   },
 };

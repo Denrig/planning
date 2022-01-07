@@ -14,6 +14,10 @@ const TasksRepository = (axios) => ({
   cancelVote(payload) {
     return axios.delete('v1/votes', { data: payload }).then((response) => response.data);
   },
+
+  displayVotes(payload) {
+    return axios.patch(`v1/votes/${payload.id}`, payload).then((response) => response.data);
+  },
 });
 
 export default TasksRepository;

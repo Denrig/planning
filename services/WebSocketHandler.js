@@ -3,6 +3,7 @@ const TYPES = {
   PLAYER_JOINED: 'PLAYER_JOINED',
   PLAYER_VOTED: 'PLAYER_VOTED',
   PLAYER_CANCELED_VOTE: 'PLAYER_VOTE_CANCELED',
+  DISPLAY_VOTES_CHANGED: 'DISPLAY_VOTES_CHANGED',
 };
 
 export const WebSocketHandler = {
@@ -20,6 +21,9 @@ export const WebSocketHandler = {
         break;
       case TYPES.PLAYER_CANCELED_VOTE:
         store.dispatch('voting/playerCanceledVote', data.user_id);
+        break;
+      case TYPES.DISPLAY_VOTES_CHANGED:
+        store.dispatch('voting/displayVotesChanged', data.value);
         break;
       default:
         console.log('Unknown');

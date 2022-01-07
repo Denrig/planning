@@ -27,34 +27,34 @@
                     placeholder="Room's name",
                     :class="{ invalid: invalid && dirty }"
                   )
-            b-row
-              b-col
-                ValidationProvider.input-group.text(
-                  rules="required",
-                  name="noUsers",
-                  v-slot="{ errors, invalid, dirty }",
-                  tag="div"
-                )
-                  input(
-                    type="number",
-                    v-model="form.players_count",
-                    placeholder="Players Count",
-                    :class="{ invalid: invalid && dirty }"
-                  )
-              b-col
-                ValidationProvider.input-group.checkbox(
-                  rules="required",
-                  name="code",
-                  v-slot="{ errors, invalid, dirty }",
-                  tag="div"
-                )
-                  label Is Private?
-                  b-form-checkbox(
-                    type="checkbox",
-                    size="lg",
-                    v-model="form.is_private",
-                    :class="{ invalid: invalid && dirty }"
-                  )
+            //- b-row TO DO: Reintroduce this in a future iteration
+            //-   b-col
+            //-     ValidationProvider.input-group.text(
+            //-       rules="required",
+            //-       name="noUsers",
+            //-       v-slot="{ errors, invalid, dirty }",
+            //-       tag="div"
+            //-     )
+            //-       input(
+            //-         type="number",
+            //-         v-model="form.players_count",
+            //-         placeholder="Players Count",
+            //-         :class="{ invalid: invalid && dirty }"
+            //-       )
+            //-   b-col
+            //-     ValidationProvider.input-group.checkbox(
+            //-       rules="required",
+            //-       name="code",
+            //-       v-slot="{ errors, invalid, dirty }",
+            //-       tag="div"
+            //-     )
+            //-       label Is Private?
+            //-       b-form-checkbox(
+            //-         type="checkbox",
+            //-         size="lg",
+            //-         v-model="form.is_private",
+            //-         :class="{ invalid: invalid && dirty }"
+            //-       )
             b-row
               button.app-button.w-100(@click="handleCreateRoom") Create Room!
 </template>

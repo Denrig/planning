@@ -9,7 +9,7 @@
 
 </template>
 <script>
-import { mapState, mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'VotingBar',
@@ -24,10 +24,7 @@ export default {
     ...mapGetters({
       currentTask: 'task/currentVotingTask',
       currentUser: 'user/currentUser',
-    }),
-
-    ...mapState({
-      currentVote: 'voting/currentVote',
+      showVotes: 'voting/showVotes',
     }),
 
     voteRequest() {
@@ -38,6 +35,12 @@ export default {
     },
   },
 
+  watch: {
+    showVotes(val) {
+      if (val) this.resetVotingBar();
+    },
+  },
+
   methods: {
     ...mapActions({
       voteTask: 'voting/voteTask',
@@ -45,6 +48,8 @@ export default {
     }),
 
     handleCardClicked(event, card) {
+      if (this.showVotes) return;
+
       this.hasVoted = true;
       this.handleIndicator(event.target);
 
@@ -65,10 +70,14 @@ export default {
     },
 
     handleCancelVote() {
+      this.resetVotingBar();
+      if (this.currentTask) this.cancelVote(this.voteRequest);
+    },
+
+    resetVotingBar() {
       this.hasVoted = false;
       this.removeCurrentActiveClass();
       this.$refs.indicator.style.left = '5vw';
-      this.cancelVote(this.voteRequest);
     },
 
     removeCurrentActiveClass() {

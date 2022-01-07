@@ -5,7 +5,7 @@
     .name {{user.name}}
   .vote-display(:class="{ active: showVotes && user.voted === true }" ref="vote-display")
     .circle
-      span {{ 5 }}
+      span {{ user.vote }}
     .handle
 </template>
 <script>
@@ -14,17 +14,20 @@ import { mapGetters } from 'vuex';
 export default {
   name: 'Player',
   props: {
-    user: {
-      type: Object,
-      default: () => {},
+    userId: {
+      type: String,
+      default: null,
     },
   },
-
   computed: {
     ...mapGetters({
       showVotes: 'voting/showVotes',
-      currentVote: 'voting/currentVote',
+      player: 'room/getPlayer',
     }),
+
+    user() {
+      return this.player(this.userId);
+    },
   },
 };
 </script>

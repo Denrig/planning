@@ -19,6 +19,11 @@ export const actions = {
     commit('room/PLAYER_VOTED', { vote: { user_id: userId, vote: null }, voted: false }, { root: true });
   },
 
+  displayVotesChanged({ commit }, value) {
+    commit(TYPES.SET_SHOW_VOTES, value);
+    if (!value) commit('room/CLEAR_VOTES', null, { root: true });
+  },
+
   // Api requests
   voteTask({ commit }, vote) {
     return this.$api.tasks
@@ -29,6 +34,12 @@ export const actions = {
   cancelVote({ commit }, payload) {
     return this.$api.tasks
       .cancelVote(payload)
+      .catch((errors) => commit(TYPES.VOTE_ERROR, errors));
+  },
+
+  changeDisplayVotes({ commit, rootState }, value) {
+    return this.$api.tasks
+      .displayVotes({ value, id: rootState.room.currentRoom.id })
       .catch((errors) => commit(TYPES.VOTE_ERROR, errors));
   },
 };
