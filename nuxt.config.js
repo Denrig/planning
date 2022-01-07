@@ -27,10 +27,9 @@ export default {
       '~assets/styles/imported/include-media.scss',
     ],
   },
-  publicRuntimeConfig: {
-    axios: {
-      baseURL: process.env.BASE_URL,
-    },
+
+  axios: {
+    baseURL: process.env.BASE_URL,
   },
 
   plugins: [
