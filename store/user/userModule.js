@@ -11,6 +11,7 @@ export const state = () => ({
 export const getters = {
   currentUser: (state) => state.currentUser,
   currentUserId: (state) => state.currentUserId,
+  currentRole: () => StorageService.getFromStorage(STORAGE_KEYS.CURRENT_ROLE),
 };
 
 export const actions = {

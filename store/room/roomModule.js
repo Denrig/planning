@@ -54,6 +54,7 @@ export const actions = {
       .joinRoom(payload)
       .then(() => {
         commit(TYPES.ROOM_SUCCESS);
+        StorageService.saveToStorage(STORAGE_KEYS.CURRENT_ROLE, payload.role);
       })
       .catch((errors) => {
         commit(TYPES.ROOM_ERROR, errors);

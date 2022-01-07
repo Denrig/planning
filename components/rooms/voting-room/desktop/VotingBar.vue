@@ -25,6 +25,7 @@ export default {
       currentTask: 'task/currentVotingTask',
       currentUser: 'user/currentUser',
       showVotes: 'voting/showVotes',
+      currentRole: 'user/currentRole',
     }),
 
     voteRequest() {
@@ -48,7 +49,7 @@ export default {
     }),
 
     handleCardClicked(event, card) {
-      if (this.showVotes) return;
+      if (this.showVotes || this.currentRole !== 'player') return;
 
       this.hasVoted = true;
       this.handleIndicator(event.target);

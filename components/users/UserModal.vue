@@ -40,7 +40,7 @@
                   width=100
                 )
 
-          b-row(v-if="withRoles")
+          b-row
             label.info-text Choose Your Role
             HorizontalSelect.role-select(
               :items="userRoles",
@@ -71,10 +71,6 @@ export default {
   },
 
   props: {
-    withRoles: {
-      type: Boolean,
-      default: true,
-    },
     action: {
       type: String,
       default: 'create',
@@ -137,7 +133,7 @@ export default {
       }
 
       action.then(() => {
-        if (this.withRoles) this.joinRoomWithRole(action);
+        this.joinRoomWithRole(action);
         this.$emit('completed');
       });
     },

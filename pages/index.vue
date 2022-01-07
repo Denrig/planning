@@ -1,8 +1,9 @@
 <template lang="pug">
 .home-page
-  CreateRoomModal
+  CreateRoomModal(
+    @completed="handleCreateRoomCompleted"
+  )
   UserModal(
-    :withRoles="withRoles",
     :action="action",
     @completed="handleUserActionCompleted"
   )
@@ -81,7 +82,6 @@ export default {
     return {
       slide: false,
       code: null,
-      withRoles: true,
       isCreateRoom: false,
       images: [
         'https://images3.alphacoders.com/106/1069102.jpg',
@@ -126,17 +126,16 @@ export default {
 
     handleCreateRoomClicked() {
       this.isCreateRoom = true;
-      this.withRoles = false;
+      this.handleCreateRoomModalState(true);
+    },
+
+    handleCreateRoomCompleted() {
       this.handleUserModalState(true);
+      this.handleCreateRoomModalState(false);
     },
 
     handleUserActionCompleted() {
-      if (this.isCreateRoom) {
-        this.handleUserModalState(false);
-        this.handleCreateRoomModalState(true);
-      } else {
-        this.$router.push('voting-room');
-      }
+      this.$router.push('voting-room');
     },
 
     handleCheckCode() {
