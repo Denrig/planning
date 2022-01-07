@@ -2,9 +2,9 @@
 .desktop-layout
   .voting-stage
     .players-section
-      Player(v-for="attendance in currentRoom.room_attendances"
-      :key="attendance.user.id"
-      :user="attendance.user")
+      Player(v-for="player in players"
+      :key="player.id"
+      :user="player.user")
     TasksSection
   VotingBar
   //- .result
@@ -26,6 +26,7 @@ export default {
 
   computed: mapGetters({
     currentRoom: 'room/currentRoom',
+    players: 'room/players',
   }),
 };
 </script>

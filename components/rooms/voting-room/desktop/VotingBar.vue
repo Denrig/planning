@@ -9,7 +9,7 @@
 
 </template>
 <script>
-import { mapState, mapMutations } from 'vuex';
+import { mapState, mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'VotingBar',
@@ -20,33 +20,55 @@ export default {
     };
   },
 
-  computed: mapState({
-    currentVote: 'room/currentVote',
-  }),
+  computed: {
+    ...mapGetters({
+      currentTask: 'task/currentVotingTask',
+      currentUser: 'user/currentUser',
+    }),
+
+    ...mapState({
+      currentVote: 'voting/currentVote',
+    }),
+
+    voteRequest() {
+      return {
+        task_id: this.currentTask.id,
+        user_id: this.currentUser.id,
+      };
+    },
+  },
 
   methods: {
-    ...mapMutations({ setCurrentVote: 'room/setCurrentVote' }),
+    ...mapActions({
+      voteTask: 'voting/voteTask',
+      cancelVote: 'voting/cancelVote',
+    }),
 
     handleCardClicked(event, card) {
       this.hasVoted = true;
-      this.setCurrentVote(card);
-
-      const coords = event.target.getBoundingClientRect();
-      const { indicator } = this.$refs;
-      indicator.style.left = `${coords.x}px`;
       this.handleIndicator(event.target);
+
+      if (this.currentTask) {
+        this.voteTask({
+          ...this.voteRequest,
+          vote: card,
+        }).catch(() => this.handleCancelVote());
+      }
     },
 
     handleIndicator(currentElement) {
       this.removeCurrentActiveClass();
+      const coords = currentElement.getBoundingClientRect();
+      const { indicator } = this.$refs;
+      indicator.style.left = `${coords.x}px`;
       currentElement.classList.add('active');
     },
 
     handleCancelVote() {
       this.hasVoted = false;
-      this.setCurrentVote(null);
       this.removeCurrentActiveClass();
       this.$refs.indicator.style.left = '5vw';
+      this.cancelVote(this.voteRequest);
     },
 
     removeCurrentActiveClass() {
@@ -106,6 +128,7 @@ export default {
   }
 
   .card {
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -117,7 +140,6 @@ export default {
     font-size: $bigger-text;
     font-weight: $bold;
     transition: 0.5s;
-
     &.active {
       transform: translateY(-25px);
     }

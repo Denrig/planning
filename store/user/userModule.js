@@ -4,7 +4,7 @@ import { StorageService } from '~/services/StorageService';
 import { notifyRequestError, notifySuccess } from '~/utils/notificationsUtils.js';
 
 export const state = () => ({
-  currentUserId: null,
+  currentUserId: StorageService.getFromStorage(STORAGE_KEYS.USER_ID_KEY),
   currentUser: {},
 });
 
@@ -16,6 +16,7 @@ export const getters = {
 export const actions = {
   getCurrentUser({ state, commit }) {
     commit(TYPES.USER_REQUEST);
+    commit('setCurrentUserId');
     return this.$api.users
       .getCurrentUser(state.currentUserId)
       .then((response) => {
@@ -76,6 +77,8 @@ export const mutations = {
   },
 
   setCurrentUserId(state) {
-    state.currentUserId = StorageService.getFromStorage(STORAGE_KEYS.USER_ID_KEY);
+    if (!state.currentUserId) {
+      state.currentUserId = StorageService.getFromStorage(STORAGE_KEYS.USER_ID_KEY);
+    }
   },
 };

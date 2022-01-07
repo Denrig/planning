@@ -63,11 +63,11 @@
 </template>>
 
 <script>
-import { BIcon } from "bootstrap-vue";
-import { mapMutations, mapGetters, mapActions } from "vuex";
-import MenuItem from "@/components/home/MenuItem.vue";
-import CreateRoomModal from "@/components/rooms/CreateRoomModal.vue";
-import UserModal from "@/components/users/UserModal.vue";
+import { BIcon } from 'bootstrap-vue';
+import { mapMutations, mapGetters, mapActions } from 'vuex';
+import MenuItem from '@/components/home/MenuItem.vue';
+import CreateRoomModal from '@/components/rooms/CreateRoomModal.vue';
+import UserModal from '@/components/users/UserModal.vue';
 
 export default {
   components: {
@@ -84,36 +84,36 @@ export default {
       withRoles: true,
       isCreateRoom: false,
       images: [
-        "https://images3.alphacoders.com/106/1069102.jpg",
-        "https://i.redd.it/v2cmfx8rbdv11.jpg",
-        "https://i.pinimg.com/originals/7d/98/84/7d98840fdff1b2e7cd508cc7f3a17403.jpg",
+        'https://images3.alphacoders.com/106/1069102.jpg',
+        'https://i.redd.it/v2cmfx8rbdv11.jpg',
+        'https://i.pinimg.com/originals/7d/98/84/7d98840fdff1b2e7cd508cc7f3a17403.jpg',
       ],
     };
+  },
+
+  computed: {
+    ...mapGetters({
+      currentUserId: 'user/currentUserId',
+    }),
+
+    action() {
+      return this.currentUserId ? 'update' : 'create';
+    },
   },
 
   created() {
     this.setCurrentUserId();
   },
 
-  computed: {
-    ...mapGetters({
-      currentUserId: "user/currentUserId",
-    }),
-
-    action() {
-      return this.currentUserId ? "update" : "create";
-    },
-  },
-
   methods: {
     ...mapMutations({
-      handleCreateRoomModalState: "modal/handleCreateRoomModalState",
-      handleUserModalState: "modal/handleUserModalState",
-      setCurrentUserId: "user/setCurrentUserId",
+      handleCreateRoomModalState: 'modal/handleCreateRoomModalState',
+      handleUserModalState: 'modal/handleUserModalState',
+      setCurrentUserId: 'user/setCurrentUserId',
     }),
 
     ...mapActions({
-      getRoomByCode: "room/getRoomByCode",
+      getRoomByCode: 'room/getRoomByCode',
     }),
 
     onSlideStart() {
@@ -135,7 +135,7 @@ export default {
         this.handleUserModalState(false);
         this.handleCreateRoomModalState(true);
       } else {
-        this.$router.push("voting-room");
+        this.$router.push('voting-room');
       }
     },
 

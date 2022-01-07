@@ -4,12 +4,12 @@ const UsersRepository = (axios) => ({
   },
 
   createUser(payload) {
-    return axios.post('v1/users', payload).then((resp) => resp.data)
+    return axios.post('v1/users', payload).then((resp) => resp.data);
   },
 
   updateUser(payload) {
-    return axios.patch(`v1/users/${payload.user.id}`, payload).then((resp) => resp.data)
-  }
-})
+    return axios.patch(`v1/users/${payload.user.id}`, payload).then((resp) => resp.data);
+  },
+});
 
-export default UsersRepository
+export default UsersRepository;

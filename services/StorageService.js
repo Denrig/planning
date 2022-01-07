@@ -1,13 +1,13 @@
 export const StorageService = {
   saveToStorage(key, value) {
-    if (process.client) {
-      localStorage.setItem(key, value)
+    if (process.client && value) {
+      localStorage.setItem(key, value);
     }
   },
 
   deleteFromStorage(key) {
     if (process.client) {
-      localStorage.removeItem(key)
+      localStorage.removeItem(key);
     }
   },
 
@@ -15,5 +15,5 @@ export const StorageService = {
     if (process.client) {
       return localStorage.getItem(key);
     }
-  }
-}
+  },
+};

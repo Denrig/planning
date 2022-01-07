@@ -53,17 +53,17 @@
                   width=100
                 )
                 .role-name {{ props.item.role }}
-          b-row 
+          b-row
             button.app-button.w-100.start-voting(@click="handleUserAction") Let's Go!
 </template>
 <script>
-import { mapGetters, mapActions } from "vuex";
-import Modal from "@/components/common/Modal.vue";
-import HorizontalSelect from "@/components/common/HorizontalSelect.vue";
-import CHARACTER_IMAGES from "@/utils/character-utils.js";
+import { mapGetters, mapActions } from 'vuex';
+import Modal from '@/components/common/Modal.vue';
+import HorizontalSelect from '@/components/common/HorizontalSelect.vue';
+import CHARACTER_IMAGES from '@/utils/character-utils.js';
 
 export default {
-  name: "UserModal",
+  name: 'UserModal',
 
   components: {
     Modal,
@@ -77,7 +77,7 @@ export default {
     },
     action: {
       type: String,
-      default: "create",
+      default: 'create',
     },
   },
 
@@ -87,50 +87,50 @@ export default {
       characterImages: CHARACTER_IMAGES,
       userRoles: [
         {
-          role: "player",
-          image: "player.png",
+          role: 'player',
+          image: 'player.png',
         },
         {
-          role: "spectator",
-          image: "spectator.png",
+          role: 'spectator',
+          image: 'spectator.png',
         },
       ],
     };
   },
 
+  computed: {
+    ...mapGetters({
+      userModal: 'modal/userModal',
+      currentUser: 'user/currentUser',
+      currentRoom: 'room/currentRoom',
+    }),
+  },
+
   watch: {
     userModal() {
-      if (this.action === "update") {
+      if (this.action === 'update') {
         this.getCurrentUser().then(() => {
           this.form = JSON.parse(JSON.stringify(this.currentUser));
           this.$refs.characterSelect.selectByIndex(
-            CHARACTER_IMAGES.indexOf(this.form.character_image)
+            CHARACTER_IMAGES.indexOf(this.form.character_image),
           );
         });
       }
     },
   },
 
-  computed: {
-    ...mapGetters({
-      userModal: "modal/userModal",
-      currentUser: "user/currentUser",
-      currentRoom: "room/currentRoom",
-    }),
-  },
-
   methods: {
     ...mapActions({
-      createUser: "user/createUser",
-      updateUser: "user/updateUser",
-      getCurrentUser: "user/getCurrentUser",
-      handleUserModalState: "modal/handleUserModal",
-      joinRoom: "room/joinRoom",
+      createUser: 'user/createUser',
+      updateUser: 'user/updateUser',
+      getCurrentUser: 'user/getCurrentUser',
+      handleUserModalState: 'modal/handleUserModal',
+      joinRoom: 'room/joinRoom',
     }),
 
     handleUserAction() {
       let action = null;
-      if (this.action === "create") {
+      if (this.action === 'create') {
         action = this.createUser({ user: this.form });
       } else {
         action = this.updateUser({ user: this.form });
@@ -138,7 +138,7 @@ export default {
 
       action.then(() => {
         if (this.withRoles) this.joinRoomWithRole(action);
-        this.$emit("completed");
+        this.$emit('completed');
       });
     },
 

@@ -54,12 +54,12 @@ export default {
 
   methods: {
     ...mapActions({
-      createTasksForRoom: 'task/createTasksForRoom',
+      createTask: 'task/createTask',
     }),
 
     handleAddTask() {
       this.form.room_id = this.currentRoom.id;
-      this.createTasksForRoom(this.form).then(() => {
+      this.createTask(this.form).then(() => {
         this.from = {};
         this.addTaskEnabled = false;
       });

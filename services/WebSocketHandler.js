@@ -1,7 +1,8 @@
 const TYPES = {
   TASK_ADDED: 'TASK_ADDED',
-  VOTING_ENDED: 'VOTING_ENDED',
   PLAYER_JOINED: 'PLAYER_JOINED',
+  PLAYER_VOTED: 'PLAYER_VOTED',
+  PLAYER_CANCELED_VOTE: 'PLAYER_VOTE_CANCELED',
 };
 
 export const WebSocketHandler = {
@@ -14,7 +15,11 @@ export const WebSocketHandler = {
       case TYPES.PLAYER_JOINED:
         store.dispatch('room/addUserToRoom', data.user);
         break;
-      case TYPES.VOTING_ENDED:
+      case TYPES.PLAYER_VOTED:
+        store.dispatch('voting/playerVoted', data);
+        break;
+      case TYPES.PLAYER_CANCELED_VOTE:
+        store.dispatch('voting/playerCanceledVote', data.user_id);
         break;
       default:
         console.log('Unknown');

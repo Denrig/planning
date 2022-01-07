@@ -1,3 +1,4 @@
+import Vue from 'vue';
 import { TYPES } from './roomTypes';
 import { STORAGE_KEYS } from '~/static/storage-keys';
 import { StorageService } from '~/services/StorageService';
@@ -6,13 +7,16 @@ import { notifyRequestError, notifySuccess } from '~/utils/notificationsUtils.js
 export const state = () => ({
   rooms: [],
   currentRoom: {},
+  players: [],
   roomLoading: false,
   currentVote: null,
+  showVotes: false,
 });
 
 export const getters = {
   rooms: (state) => state.rooms,
   currentRoom: (state) => state.currentRoom,
+  players: (state) => state.players,
 };
 
 export const actions = {
@@ -48,7 +52,7 @@ export const actions = {
     commit(TYPES.ROOM_REQUEST);
     return this.$api.rooms
       .joinRoom(payload)
-      .then((response) => {
+      .then(() => {
         commit(TYPES.ROOM_SUCCESS);
       })
       .catch((errors) => {
@@ -61,6 +65,8 @@ export const actions = {
       .getCurrentRoom(StorageService.getFromStorage(STORAGE_KEYS.SESSION_ID_KEY))
       .then((response) => {
         commit(TYPES.SET_CURRENT_ROOM, response);
+        commit(TYPES.SET_PLAYERS, response.room_attendances);
+        commit('task/SET_TASKS', response.tasks, { root: true });
       })
       .catch((errors) => {
         commit(TYPES.ROOM_ERROR, errors);
@@ -94,10 +100,19 @@ export const mutations = {
   },
 
   [TYPES.ADD_USER_TO_ROOM](state, user) {
-    state.currentRoom.room_attendances.push(user);
+    state.players.push(user);
   },
 
-  setCurrentVote(state, vote) {
-    state.currentVote = vote;
+  [TYPES.SET_PLAYERS](state, players) {
+    state.players = players;
+  },
+
+  [TYPES.PLAYER_VOTED](state, data) {
+    const { user } = state
+      .players
+      .find((player) => player.user.id === data.vote.user_id);
+
+    Vue.set(user, 'voted', data.voted);
+    Vue.set(user, 'vote', data.vote);
   },
 };

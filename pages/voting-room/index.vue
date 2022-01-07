@@ -19,6 +19,7 @@ export default {
     ...mapGetters({
       isDesktop: 'layout/isDesktop',
       currentRoom: 'room/currentRoom',
+      currentUser: 'user/currentUser',
     }),
   },
 
@@ -31,21 +32,22 @@ export default {
   },
 
   mounted() {
-    this.getCurrentRoom();
+    this.getCurrentUser();
+    this.getCurrentRoom().then(() => this.subscribeToCable());
     this.initLayoutModule();
-    this.subscribeToCable();
   },
 
   methods: {
     ...mapActions({
       initLayoutModule: 'layout/initLayoutModule',
       getCurrentRoom: 'room/getCurrentRoom',
+      getCurrentUser: 'user/getCurrentUser',
     }),
 
     subscribeToCable() {
       this.$cable.subscribe({
         channel: 'RoomChannel',
-        id: '0d51565c-9e03-4ad7-8f25-7614cb4171e7',
+        id: this.currentRoom.id,
       });
     },
   },

@@ -8,6 +8,7 @@ export const state = () => ({
 
 export const getters = {
   tasks: (state) => state.tasks,
+  currentVotingTask: (state) => state.tasks[0],
 };
 
 export const actions = {
@@ -18,12 +19,13 @@ export const actions = {
       .catch((errors) => commit(TYPES.TASK_ERROR, errors));
   },
 
-  createTasksForRoom({ commit }, payload) {
+  createTask({ commit }, payload) {
     return this.$api.tasks
       .createTask(payload)
       .then(() => commit(TYPES.TASK_SUCCESS))
       .catch((errors) => commit(TYPES.TASK_ERROR, errors));
   },
+
   addTask({ commit }, task) {
     commit(TYPES.ADD_TASK, task);
   },
