@@ -1,12 +1,15 @@
+import Vue from 'vue';
 import { TYPES } from './votingTypes';
 import { notifyRequestError } from '~/utils/notificationsUtils.js';
 
 export const state = () => ({
   showVotes: false,
+  votingResults: {},
 });
 
 export const getters = {
   showVotes: (state) => state.showVotes,
+  votingResults: (state) => state.votingResults,
 };
 
 export const actions = {
@@ -39,7 +42,7 @@ export const actions = {
 
   changeDisplayVotes({ commit, rootState }, value) {
     return this.$api.tasks
-      .displayVotes({ value, id: rootState.room.currentRoom.id })
+      .displayVotes({ value, id: rootState.task.tasks[0].id })
       .catch((errors) => commit(TYPES.VOTE_ERROR, errors));
   },
 };
@@ -52,5 +55,9 @@ export const mutations = {
 
   [TYPES.SET_SHOW_VOTES](state, value) {
     state.showVotes = value;
+  },
+
+  [TYPES.SET_VOTING_RESULTS](state, value) {
+    Vue.set(state, 'votingResults', value);
   },
 };

@@ -12,6 +12,7 @@ export const WebSocketHandler = {
     switch (data.type) {
       case TYPES.TASK_ADDED:
         store.dispatch('task/addTask', data.task);
+        store.dispatch('voting/displayVotesChanged', false);
         break;
       case TYPES.PLAYER_JOINED:
         store.dispatch('room/addUserToRoom', data.user);
@@ -24,6 +25,7 @@ export const WebSocketHandler = {
         break;
       case TYPES.DISPLAY_VOTES_CHANGED:
         store.dispatch('voting/displayVotesChanged', data.value);
+        store.commit('voting/SET_VOTING_RESULTS', data.results || {});
         break;
       default:
         console.log('Unknown');

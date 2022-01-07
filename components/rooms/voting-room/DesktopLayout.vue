@@ -11,6 +11,7 @@
       .actions-pannel
         button.app-button(@click="changeDisplayVotes(true)") Show Votes
         button.app-button(@click="changeDisplayVotes(false)") Clear Votes
+      Result
   VotingBar
   //- .result
 </template>
@@ -19,6 +20,7 @@ import { mapGetters, mapActions } from 'vuex';
 import VotingBar from '@/components/rooms/voting-room/desktop/VotingBar.vue';
 import TasksSection from '@/components/rooms/voting-room/desktop/TasksSection.vue';
 import Player from '@/components/users/Player.vue';
+import Result from '@/components/rooms/voting-room/Result.vue';
 
 export default {
   name: 'DesktopLayout',
@@ -27,6 +29,7 @@ export default {
     VotingBar,
     TasksSection,
     Player,
+    Result,
   },
 
   computed: mapGetters({
@@ -53,8 +56,6 @@ export default {
   text-transform: uppercase;
 }
 .actions-pannel {
-  height: 200px;
-  margin-top: auto;
   .app-button{
     width: 100%;
     margin: 10px 0;

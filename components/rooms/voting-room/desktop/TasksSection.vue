@@ -74,8 +74,7 @@ export default {
 <style lang="scss">
 .tasks-section {
   overflow: scroll;
-  height: calc(100% - 120px);
-
+  max-height: 300px;
   .task-form-container {
     .app-button {
       font-size: $medium-text;
