@@ -21,13 +21,13 @@ transition(name="modal-fade")
 
 <script>
 export default {
-  name: "Modal",
+  name: 'Modal',
 
   props: {
     size: {
       type: String,
       required: false,
-      default: "medium",
+      default: 'medium',
     },
     modalTitle: {
       type: String,
@@ -39,7 +39,7 @@ export default {
     },
     backgroundImage: {
       type: String,
-      default: "",
+      default: '',
     },
     displayed: {
       type: Boolean,
@@ -52,12 +52,12 @@ export default {
   },
   watch: {
     displayed(newVal, oldVal) {
-      if (newVal === true) this.$emit("show");
+      if (newVal === true) this.$emit('show');
     },
   },
   methods: {
     close() {
-      this.$emit("close");
+      this.$emit('close');
     },
   },
 };

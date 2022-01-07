@@ -9,12 +9,12 @@ export const state = () => ({
   state: {
     isMobile: false,
     isDesktop: isScreenMD(),
-  }
-})
+  },
+});
 
 export const getters = {
-    isDesktop: state => state.isDesktop
-}
+  isDesktop: (state) => state.isDesktop,
+};
 
 export const mutations = {
   setIsMobile(state, isMobile) {
@@ -24,16 +24,16 @@ export const mutations = {
   setIsDesktop(state, isDesktop) {
     state.isDesktop = isDesktop;
   },
-}
+};
 
 export const actions = {
   initLayoutModule({ commit }) {
     resizeHandler(commit);
 
-    if(process.client)  {
-        window.addEventListener('resize', () => {
-            resizeHandler(commit);
-        }); 
+    if (process.client) {
+      window.addEventListener('resize', () => {
+        resizeHandler(commit);
+      });
     }
   },
-}
+};

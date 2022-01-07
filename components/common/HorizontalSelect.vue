@@ -5,7 +5,7 @@
 </template>
 <script>
 export default {
-  name: "HorizontalScroll",
+  name: 'HorizontalScroll',
 
   props: {
     items: {
@@ -16,22 +16,21 @@ export default {
 
   methods: {
     handleSelectItem(event, item) {
-      const previous = this.$refs.horizontalSelect.querySelector(".selected");
-      if (previous) previous.classList.remove("selected");
+      const previous = this.$refs.horizontalSelect.querySelector('.selected');
+      if (previous) previous.classList.remove('selected');
 
-      const target = event.target;
+      const { target } = event;
       let element = event.target;
-      if (target.parentElement._prevClass === "item")
-        element = target.parentElement;
-      element.classList.add("selected");
+      if (target.parentElement._prevClass === 'item') { element = target.parentElement; }
+      element.classList.add('selected');
 
-      this.$emit("itemSelected", item);
+      this.$emit('itemSelected', item);
     },
 
     selectByIndex(index) {
-      const horizontalSelect = this.$refs.horizontalSelect;
+      const { horizontalSelect } = this.$refs;
       const element = horizontalSelect.children[index];
-      if (element) element.classList.add("selected");
+      if (element) element.classList.add('selected');
     },
   },
 };

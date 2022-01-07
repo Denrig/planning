@@ -59,9 +59,9 @@
               button.app-button.w-100(@click="handleCreateRoom") Create Room!
 </template>
 <script>
-import { mapGetters, mapMutations, mapActions } from "vuex";
-import Modal from "@/components/common/Modal.vue";
-import { notifySuccess } from "~/utils/notificationsUtils.js";
+import { mapGetters, mapMutations, mapActions } from 'vuex';
+import Modal from '@/components/common/Modal.vue';
+import { notifySuccess } from '~/utils/notificationsUtils.js';
 
 export default {
   components: {
@@ -76,23 +76,23 @@ export default {
 
   computed: {
     ...mapGetters({
-      createRoomModal: "modal/createRoomModal",
-      currentRoom: "room/currentRoom",
+      createRoomModal: 'modal/createRoomModal',
+      currentRoom: 'room/currentRoom',
     }),
   },
 
   methods: {
     ...mapMutations({
-      handleCreateRoomModalState: "modal/handleCreateRoomModalState",
+      handleCreateRoomModalState: 'modal/handleCreateRoomModalState',
     }),
     ...mapActions({
-      createRoom: "room/createRoom",
+      createRoom: 'room/createRoom',
     }),
 
     handleCreateRoom() {
       this.createRoom({ room: this.form }).then((response) => {
-        notifySuccess(this, "Your room is now open!");
-        this.$router.push("voting-room");
+        notifySuccess(this, 'Your room is now open!');
+        this.$router.push('voting-room');
       });
     },
   },
