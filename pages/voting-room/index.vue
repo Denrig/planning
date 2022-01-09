@@ -32,8 +32,10 @@ export default {
   },
 
   mounted() {
-    this.getCurrentUser();
-    this.getCurrentRoom().then(() => this.subscribeToCable());
+    this.getCurrentUser()
+      .then(() => this.getCurrentRoom())
+      .then(() => this.subscribeToCable())
+      .catch(() => this.$router.push('/'));
     this.initLayoutModule();
   },
 

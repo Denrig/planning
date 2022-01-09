@@ -31,7 +31,7 @@ export default {
             yAxes: [
               {
                 ticks: {
-                  step: 1,
+                  stepSize: 1,
                   beginAtZero: true,
                 },
                 gridLines: {

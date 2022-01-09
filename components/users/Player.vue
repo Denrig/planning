@@ -1,7 +1,7 @@
 <template lang="pug">
 .player-wrapper(:class="{ voted: user.voted }")
   .player
-    img.avatar(src="@/assets/images/characters/character-1.png")
+    img.avatar(:src="userImage")
     .name {{user.name}}
   .vote-display(:class="{ active: showVotes && user.voted === true }" ref="vote-display")
     .circle
@@ -27,6 +27,10 @@ export default {
 
     user() {
       return this.player(this.userId);
+    },
+
+    userImage() {
+      return this.user.character_image ? `/_nuxt/assets/images/characters/${this.user.character_image}` : '';
     },
   },
 };

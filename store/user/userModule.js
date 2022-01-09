@@ -25,6 +25,7 @@ export const actions = {
       })
       .catch((errors) => {
         commit(TYPES.USER_ERROR, errors);
+        return Promise.reject(errors);
       });
   },
 
