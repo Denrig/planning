@@ -23,7 +23,7 @@ export default {
   computed: {
     ...mapGetters({
       currentTask: 'task/currentVotingTask',
-      currentUser: 'user/currentUser',
+      currentUserId: 'user/currentUserId',
       showVotes: 'voting/showVotes',
       currentRole: 'user/currentRole',
     }),
@@ -31,7 +31,7 @@ export default {
     voteRequest() {
       return {
         task_id: this.currentTask.id,
-        user_id: this.currentUser.id,
+        user_id: this.currentUserId,
       };
     },
   },

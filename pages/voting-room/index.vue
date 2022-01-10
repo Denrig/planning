@@ -19,7 +19,8 @@ export default {
     ...mapGetters({
       isDesktop: 'layout/isDesktop',
       currentRoom: 'room/currentRoom',
-      currentUser: 'user/currentUser',
+      currentUserId: 'user/currentUserId',
+      currentTask: 'task/currentVotingTask',
     }),
   },
 
@@ -32,11 +33,15 @@ export default {
   },
 
   mounted() {
-    this.getCurrentUser()
-      .then(() => this.getCurrentRoom())
+    this.getCurrentRoom()
+      .then(() => this.getVotesForTask(this.currentTask?.id))
       .then(() => this.subscribeToCable())
-      .catch(() => this.$router.push('/'));
+      .catch((errors) => this.$router.push('/'));
     this.initLayoutModule();
+  },
+
+  created() {
+    if (!this.currentUserId) this.$router.push('/');
   },
 
   methods: {
@@ -44,6 +49,7 @@ export default {
       initLayoutModule: 'layout/initLayoutModule',
       getCurrentRoom: 'room/getCurrentRoom',
       getCurrentUser: 'user/getCurrentUser',
+      getVotesForTask: 'voting/getVotesForTask',
     }),
 
     subscribeToCable() {

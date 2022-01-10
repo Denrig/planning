@@ -101,15 +101,10 @@ export default {
     },
   },
 
-  created() {
-    this.setCurrentUserId();
-  },
-
   methods: {
     ...mapMutations({
       handleCreateRoomModalState: 'modal/handleCreateRoomModalState',
       handleUserModalState: 'modal/handleUserModalState',
-      setCurrentUserId: 'user/setCurrentUserId',
     }),
 
     ...mapActions({

@@ -12,6 +12,12 @@ export const getters = {
 };
 
 export const actions = {
+  // Websocket handlers
+  addTask({ commit }, task) {
+    commit(TYPES.ADD_TASK, task);
+  },
+
+  // Api Calls
   getTasksForRoom({ commit }, roomId) {
     return this.$api.tasks
       .getTasksForRoom(roomId)
@@ -24,10 +30,6 @@ export const actions = {
       .createTask(payload)
       .then(() => commit(TYPES.TASK_SUCCESS))
       .catch((errors) => commit(TYPES.TASK_ERROR, errors));
-  },
-
-  addTask({ commit }, task) {
-    commit(TYPES.ADD_TASK, task);
   },
 };
 

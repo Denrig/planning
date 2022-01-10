@@ -45,6 +45,17 @@ export const actions = {
       .displayVotes({ value, id: rootState.task.tasks[0].id })
       .catch((errors) => commit(TYPES.VOTE_ERROR, errors));
   },
+
+  getVotesForTask({ commit }, taskId) {
+    if (!taskId) return new Promise((resolve) => resolve());
+
+    return this.$api.tasks
+      .getVotesForTask(taskId)
+      .then((votes) => {
+        votes.forEach((vote) => commit('room/PLAYER_VOTED', { vote, voted: true }, { root: true }));
+      })
+      .catch((errors) => commit(TYPES.VOTE_ERROR, errors));
+  },
 };
 
 export const mutations = {
