@@ -40,9 +40,11 @@ export const actions = {
       .catch((errors) => commit(TYPES.VOTE_ERROR, errors));
   },
 
-  changeDisplayVotes({ commit, rootState }, value) {
+  changeDisplayVotes({ commit, rootGetters }, value) {
+    if (!rootGetters['task/currentVotingTask']) return new Promise((resolve) => resolve());
+
     return this.$api.tasks
-      .displayVotes({ value, id: rootState.task.tasks[0].id })
+      .displayVotes({ value, id: rootGetters['task/currentVotingTask']?.id })
       .catch((errors) => commit(TYPES.VOTE_ERROR, errors));
   },
 
