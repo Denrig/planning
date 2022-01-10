@@ -60,7 +60,7 @@
           span You don't have a code to enter the room,
           | search through the list and find the one you're looking for!
         .app-link.rooms-list-button
-          nuxt-link(to="rooms-list") Go Now!
+          nuxt-link(to="rooms-list" :disabled="true") Coming Soon!
 </template>>
 
 <script>
