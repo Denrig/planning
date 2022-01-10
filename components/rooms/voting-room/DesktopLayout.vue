@@ -8,15 +8,12 @@
       :userId="player.id")
     .right
       TasksSection
-      .actions-pannel
-        button.app-button(@click="changeDisplayVotes(true)") Show Votes
-        button.app-button(@click="changeDisplayVotes(false)") Clear Votes
       Result
   VotingBar
   //- .result
 </template>
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters } from 'vuex';
 import VotingBar from '@/components/rooms/voting-room/desktop/VotingBar.vue';
 import TasksSection from '@/components/rooms/voting-room/desktop/TasksSection.vue';
 import Player from '@/components/users/Player.vue';
@@ -37,7 +34,6 @@ export default {
     players: 'room/players',
   }),
 
-  methods: mapActions({ changeDisplayVotes: 'voting/changeDisplayVotes' }),
 };
 </script>
 <style lang="scss">
@@ -54,11 +50,5 @@ export default {
 
   font-weight: $bold;
   text-transform: uppercase;
-}
-.actions-pannel {
-  .app-button{
-    width: 100%;
-    margin: 10px 0;
-  }
 }
 </style>

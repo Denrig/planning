@@ -1,5 +1,6 @@
 const RoomsRepository = (axios) => ({
   createRoom(payload) {
+    console.log(payload);
     return axios.post('v1/rooms', payload).then((resp) => resp.data);
   },
 

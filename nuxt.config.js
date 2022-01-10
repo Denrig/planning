@@ -28,6 +28,10 @@ export default {
     ],
   },
 
+  publicRuntimeConfig: {
+    webSocketHost: process.env.WEBSOCKET_HOST,
+  },
+
   axios: {
     baseURL: process.env.BASE_URL,
   },

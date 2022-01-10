@@ -27,7 +27,7 @@
                     placeholder="Room's name",
                     :class="{ invalid: invalid && dirty }"
                   )
-            //- b-row TO DO: Reintroduce this in a future iteration
+            //- b-row TO DO: Enable this in a future iteration
             //-   b-col
             //-     ValidationProvider.input-group.text(
             //-       rules="required",
@@ -56,7 +56,7 @@
             //-         :class="{ invalid: invalid && dirty }"
             //-       )
             b-row
-              button.app-button.w-100(@click="handleCreateRoom") Create Room!
+              input.app-button.w-100(type="submit" value="Create Room!")
 </template>
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex';
@@ -90,7 +90,7 @@ export default {
     }),
 
     handleCreateRoom() {
-      this.createRoom({ room: this.form }).then((response) => {
+      this.createRoom({ room: this.form }).then(() => {
         notifySuccess(this, 'Your room is now open!');
         this.$emit('completed');
       });

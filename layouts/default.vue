@@ -1,5 +1,6 @@
 <template lang="pug">
 .app
   nuxt
-  notifications
+  client-only
+    notifications
 </template>

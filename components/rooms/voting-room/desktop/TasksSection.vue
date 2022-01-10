@@ -28,7 +28,7 @@
                 @click="handleFormState(false)"
               ) Cancel
             b-col
-              button.app-button.w-100.create-task(@click="handleAddTask") Add!
+              input.app-button.w-100.create-task(type="submit" value="Add!")
   .task(v-for="task in tasks", :key="task.id")
     .title.h-100 {{ task.text }}
 </template>
@@ -60,13 +60,13 @@ export default {
     handleAddTask() {
       this.form.room_id = this.currentRoom.id;
       this.createTask(this.form).then(() => {
-        this.from = {};
         this.addTaskEnabled = false;
       });
     },
 
     handleFormState(value) {
       this.addTaskEnabled = value;
+      this.$set(this, 'form', {});
     },
   },
 };
@@ -74,7 +74,7 @@ export default {
 <style lang="scss">
 .tasks-section {
   overflow: scroll;
-  max-height: 300px;
+  height: 50%;
   .task-form-container {
     .app-button {
       font-size: $medium-text;
@@ -98,7 +98,7 @@ export default {
     box-shadow: inset 0 0 5px 2px $light-grey;
 
     .title {
-      font-size: $big-text;
+      font-size: $medium-text;
       font-weight: $medium;
       padding: 10px;
     }

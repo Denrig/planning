@@ -1,16 +1,14 @@
 .voting-room .desktop-layout {
-  display: flex;
-  position: relative;
-  flex-direction: column;
   height: inherit;
 
   .voting-stage {
     display: flex;
     overflow: hidden;
+    height: calc(100% - 50px);
 
     .right {
       overflow: scroll;
-      height: 100%;
+      height: calc(100% - 50px);
       width: 20vw;
     }
   
@@ -24,8 +22,6 @@
   }
 
   .cards-section{
-    position: absolute;
-    bottom: 0;
     height: 50px;
   }
 }

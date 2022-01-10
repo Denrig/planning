@@ -54,7 +54,7 @@
                 )
                 .role-name {{ props.item.role }}
           b-row
-            button.app-button.w-100.start-voting(@click="handleUserAction") Let's Go!
+            input.app-button.w-100.start-voting(type="submit" value="Let's Go!")
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex';
