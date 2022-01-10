@@ -1,3 +1,4 @@
+import Vue from 'vue';
 import { TYPES } from './taskTypes';
 import { notifyRequestError } from '~/utils/notificationsUtils.js';
 
@@ -31,6 +32,13 @@ export const actions = {
       .then(() => commit(TYPES.TASK_SUCCESS))
       .catch((errors) => commit(TYPES.TASK_ERROR, errors));
   },
+
+  updateTask({ commit }, payload) {
+    return this.$api.tasks
+      .updateTask(payload)
+      .then(() => commit(TYPES.TASK_SUCCESS))
+      .catch((errors) => commit(TYPES.TASK_ERROR, errors));
+  },
 };
 
 export const mutations = {
@@ -51,7 +59,13 @@ export const mutations = {
     state.taskLoading = false;
     state.tasks = tasks;
   },
+
   [TYPES.ADD_TASK](state, task) {
     state.tasks.unshift(task);
+  },
+
+  [TYPES.UPDATE_TASK](state, task) {
+    const index = state.tasks.findIndex((stateTask) => task.id === stateTask.id);
+    Vue.set(state.tasks, index, task);
   },
 };

@@ -6,6 +6,10 @@ const TasksRepository = (axios) => ({
     return axios.post(`v1/rooms/${payload.room_id}/tasks`, payload).then((response) => response.data);
   },
 
+  updateTask(payload) {
+    return axios.patch(`v1/rooms/${payload.room_id}/tasks/${payload.task_id}`, payload).then((response) => response.data);
+  },
+
   getTasksForRoom(roomId) {
     return axios.get(`v1/rooms/${roomId}/tasks`).then((response) => response.data);
   },

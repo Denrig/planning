@@ -31,6 +31,7 @@
               input.app-button.w-100.create-task(type="submit" value="Add!")
   .task(v-for="task in tasks", :key="task.id")
     .title.h-100 {{ task.text }}
+    .story-points(v-if="task.result") {{task.result}}
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex';
@@ -92,6 +93,8 @@ export default {
   }
 
   .task {
+    display: flex;
+    align-items: center;
     margin: 10px;
     max-height: 150px;
     border-radius: 10px;
@@ -101,6 +104,21 @@ export default {
       font-size: $medium-text;
       font-weight: $medium;
       padding: 10px;
+    }
+
+    .story-points {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+
+      width: 20px;
+      height: 20px;
+      margin: 0 10px;
+      border-radius: 100%;
+
+      background-color: $pink;
+      color: $white;
     }
   }
 }

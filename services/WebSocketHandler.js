@@ -4,6 +4,7 @@ const TYPES = {
   PLAYER_VOTED: 'PLAYER_VOTED',
   PLAYER_CANCELED_VOTE: 'PLAYER_VOTE_CANCELED',
   DISPLAY_VOTES_CHANGED: 'DISPLAY_VOTES_CHANGED',
+  TASK_UPDATED: 'TASK_UPDATED',
 };
 
 export const WebSocketHandler = {
@@ -13,6 +14,9 @@ export const WebSocketHandler = {
       case TYPES.TASK_ADDED:
         store.dispatch('task/addTask', data.task);
         store.dispatch('voting/displayVotesChanged', false);
+        break;
+      case TYPES.TASK_UPDATED:
+        store.commit('task/UPDATE_TASK', data.task);
         break;
       case TYPES.PLAYER_JOINED:
         store.dispatch('room/addUserToRoom', data.user);

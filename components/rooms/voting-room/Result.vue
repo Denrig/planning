@@ -1,6 +1,10 @@
 <template lang="pug">
   .result
-    BarChart(:data="Object.values(this.votingResults)" :labels="Object.keys(this.votingResults)")
+    BarChart(
+      :data="Object.values(this.votingResults)"
+      :labels="Object.keys(this.votingResults)"
+      :options="{onClick: onChartClick}"
+    )
     .action-pannel.w-100
       button.app-button(@click="changeDisplayVotes(true)") Show Votes
       button.app-button(@click="changeDisplayVotes(false)") Clear Votes
@@ -8,6 +12,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import BarChart from '@/components/common/BarChart.vue';
+import { notifySuccess } from '~/utils/notificationsUtils.js';
 
 export default {
   components: {
@@ -17,10 +22,28 @@ export default {
   computed: mapGetters({
     votingResults: 'voting/votingResults',
     currentRoom: 'room/currentRoom',
-    players: 'room/players',
+    currentTask: 'task/currentVotingTask',
   }),
 
-  methods: mapActions({ changeDisplayVotes: 'voting/changeDisplayVotes' }),
+  methods: {
+    ...mapActions({
+      changeDisplayVotes: 'voting/changeDisplayVotes',
+      updateTask: 'task/updateTask',
+    }),
+
+    onChartClick(c, i) {
+      if (!i[0]) return;
+      const request = {
+        room_id: this.currentRoom.id,
+        task_id: this.currentTask.id,
+        result: i[0]._model.label,
+      };
+
+      this.updateTask(request).then(() => {
+        notifySuccess(this, 'Task updated!');
+      });
+    },
+  },
 };
 </script>
 <style lang="scss">
