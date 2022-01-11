@@ -35,7 +35,7 @@
             )
               template(v-slot:default="props")
                 img(
-                  :src="require(`~/assets/images/characters/${props.item}`)",
+                  :src="`/characters/${props.item}`",
                   height=150,
                   width=100
                 )
