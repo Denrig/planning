@@ -1,6 +1,6 @@
 <template lang="pug">
   .button-wrapper
-    .app-button(:class="{ animating: loading }" @click="handleClick" )
+    .app-button(:class="{ animating: loading }" @click="$emit('action')" )
       slot(v-if="!success").text
       .checkmark-container(v-else)
         svg(x="0px" y="0px" xmlns="http://www.w3.org/2000/svg" stroke="white" fill="none" class="symbol" viewBox="0 0 25 30")
@@ -11,20 +11,14 @@
 export default {
   name: 'Button',
 
-  data() {
-    return {
-      loading: false,
-      success: false,
-    };
-  },
-  methods: {
-    handleClick() {
-      this.loading = true;
-      this.success = false;
-      setTimeout(() => {
-        this.loading = false;
-        this.success = true;
-      }, 2000);
+  props: {
+    loading: {
+      type: Boolean,
+      default: false,
+    },
+    success: {
+      type: Boolean,
+      default: false,
     },
   },
 };
@@ -33,6 +27,8 @@ export default {
 $squish-animation-time: 500ms;
 $progress-animation-time: 2000ms;
 .button-wrapper {
+  height: 50px;
+  width: 100%;
   position: relative;
 }
 
