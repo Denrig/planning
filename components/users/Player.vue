@@ -30,7 +30,7 @@ export default {
     },
 
     userImage() {
-      return this.user.character_image ? `/_nuxt/assets/images/characters/${this.user.character_image}` : '';
+      return this.user.character_image ? `/characters/${this.user.character_image}` : '';
     },
   },
 };
