@@ -1,18 +1,19 @@
 <template lang="pug">
-  BarChart
+  .container
+   Button Text
 </template>
 <script>
-import BarChart from '@/components/common/BarChart.vue';
+import Button from '@/components/common/Button.vue';
 
 export default {
   components: {
-    BarChart,
+    Button,
   },
 };
 </script>
 <style lang="scss">
-.result {
-  width: 100%;
-  height: 200px;
+.container {
+  margin: 500px calc(50% - 250px);
+  width: 500px;
 }
 </style>

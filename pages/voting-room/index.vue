@@ -36,7 +36,9 @@ export default {
     this.getCurrentRoom()
       .then(() => this.getVotesForTask(this.currentTask?.id))
       .then(() => this.subscribeToCable())
-      .catch((errors) => this.$router.push('/'));
+      .catch(() => {
+        this.$router.push('/');
+      });
     this.initLayoutModule();
   },
 

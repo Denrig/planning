@@ -45,11 +45,13 @@
 }
 
 .app-button{
+  border: none;
   color: $white;
-  background-color: $grey;
+  background: $grey;
   font-weight: $bold;
   box-shadow: none;
-  border: none;
+  cursor: pointer;
+  padding: 0;
 }
 
 .app-link, .app-button {
