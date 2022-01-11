@@ -13,8 +13,6 @@
 
 @keyframes squish {
   100% {
-    left: -25%;
-    right: -25%;
     top: 30%;
     bottom: 30%;
   }
@@ -28,8 +26,8 @@
 
 @keyframes progress {
   100% {
-    left: -25%;
-    right: -25%;
+    left: 0;
+    right: 0;
   }
 }
 
