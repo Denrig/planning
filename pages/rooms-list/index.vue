@@ -1,6 +1,7 @@
 <template lang="pug">
   .rooms-list-page
-    CustomTable(:headers="headers")
+    CustomTable(:headers="headers" :data="[1,2,3,4]" :loading="true")
+      td.table-column 2
 
 </template>
 <script>
@@ -17,19 +18,6 @@ export default {
   data() {
     return {
       headers: [{
-        text: 'Header 1',
-        value: 'header_1',
-      },
-      {
-        text: 'Header 1',
-        value: 'header_1',
-      }, {
-        text: 'Header 1',
-        value: 'header_1',
-      }, {
-        text: 'Header 1',
-        value: 'header_1',
-      }, {
         text: 'Header 1',
         value: 'header_1',
       },

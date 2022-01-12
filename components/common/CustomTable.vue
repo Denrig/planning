@@ -5,44 +5,51 @@
         tr.table-headers
           th.table-header(v-for="(header, index) in headers" :key="index") {{header.text}}
       tbody(ref="tableBody")
-        tr.table-row
-          td.table-column Columnaa
-          td.table-column Columnaa
-          td.table-column Columnaa
-          td.table-column Columnaa
-          td.table-column Columnaa
-        tr.table-row
-          td.table-column Columnaa
-          td.table-column Columnaa
-          td.table-column Columnaa
-          td.table-column Columnaa
-          td.table-column Columnaa
-        tr.table-row
-          td.table-column Columnaa
-          td.table-column Columnaa
-          td.table-column Columnaa
-          td.table-column Columnaa
-          td.table-column Columnaa
-        tr.table-row
-          td.table-column Columnaa
-          td.table-column Columnaa
-          td.table-column Columnaa
-          td.table-column Columnaa
-          td.table-column Columnaa
+        template(v-if="data.length > 0")
+          tr.table-row(v-for="(row, index) in data" :key="index")
+            slot
+          Loader
+        tr.no-data(v-else)
+          td(:colspan="headers.length") No data available!
     div.table-footer
-      button.app-button(@click="slideItemsLeft") Previous Page
-      button.app-button(@click="slideItemsRight") Next Page
+      button.app-button(@click="$emit('nextPageClicked')")
+        BIcon(icon="arrow-bar-left" font-scale="2")
+      button.app-button(@click="$emit('previousPageClicked')")
+        BIcon(icon="arrow-bar-right" font-scale="2")
 
 </template>
 <script>
+import Loader from './Loader.vue';
+
 export default {
   name: 'CustomTable',
+
+  components: {
+    Loader,
+  },
+
   props: {
     headers: {
       type: Array,
       default: () => [],
     },
+    data: {
+      type: Array,
+      default: () => [],
+    },
+    loading: {
+      type: Boolean,
+      default: false,
+    },
   },
+
+  watch: {
+    loading(val) {
+      if (val) this.slideItemsRight();
+      else this.slideItemsLeft();
+    },
+  },
+
   methods: {
     slideItemsRight() {
       Array.from(this.$refs.tableBody.children).forEach((child, index) => {
@@ -99,6 +106,8 @@ export default {
 
   .table-row {
     position: relative;
+    z-index: 1;
+
     &:nth-of-type(even) {
       background-color: $yellow;
     }
@@ -121,7 +130,28 @@ export default {
       padding: 10px;
     }
   }
+
+  .no-data {
+    text-align: center;
+    color: $white;
+    td {
+      padding: 10px;
+    }
+  }
+
+  tbody {
+    position: relative;
+  }
+
+  .loader {
+top: 0;
+left: 0;
+bottom: 0;
+right: 0;
+margin: auto;
+  }
 }
+
 .table-footer {
   display: flex;
   width: 100%;
@@ -130,5 +160,10 @@ export default {
   justify-content: space-between;
   background-color: $grey;
   border-radius: 0 0 20px 20px;
+
+  .app-button {
+    margin: 0 10px;
+    background-color: transparent;
+  }
 }
 </style>
