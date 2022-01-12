@@ -7,6 +7,7 @@
     :action="action",
     @completed="handleUserActionCompleted"
   )
+  RoomsModal
   b-carousel#carousel-fade.carousel(
     fade,
     :interval="5000",
@@ -60,7 +61,7 @@
           span You don't have a code to enter the room,
           | search through the list and find the one you're looking for!
         .app-link.rooms-list-button
-          nuxt-link(to="rooms-list" :disabled="true") Coming Soon!
+          span(@click="handleRoomsModalState(true)") See Rooms List
 </template>>
 
 <script>
@@ -69,6 +70,7 @@ import { mapMutations, mapGetters, mapActions } from 'vuex';
 import MenuItem from '@/components/home/MenuItem.vue';
 import CreateRoomModal from '@/components/rooms/CreateRoomModal.vue';
 import UserModal from '@/components/users/UserModal.vue';
+import RoomsModal from '@/components/rooms/RoomsModal.vue';
 
 export default {
   components: {
@@ -76,6 +78,7 @@ export default {
     BIcon,
     CreateRoomModal,
     UserModal,
+    RoomsModal,
   },
 
   data() {
@@ -105,6 +108,7 @@ export default {
     ...mapMutations({
       handleCreateRoomModalState: 'modal/handleCreateRoomModalState',
       handleUserModalState: 'modal/handleUserModalState',
+      handleRoomsModalState: 'modal/handleRoomsModalState',
     }),
 
     ...mapActions({

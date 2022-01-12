@@ -76,7 +76,8 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 70%;
+  width: 100%;
+  margin: 20px;
 }
 
 .custom-table {

@@ -8,10 +8,11 @@
     )
       template(slot='items' slot-scope='{ props }')
         td.table-column {{props.name}}
-        td.table-column 2
+        td.table-column
+          BIcon(icon="play-fill" font-scale="2" @click="handleJoinRoom(props)")
 </template>
 <script>
-import { mapGetters, mapActions, mapState } from 'vuex';
+import { mapGetters, mapActions, mapMutations } from 'vuex';
 import CustomTable from '@/components/common/CustomTable.vue';
 
 export default {
@@ -29,7 +30,7 @@ export default {
         { text: '' },
       ],
       totalCount: 0,
-      params: { page: 1, per_page: 2 },
+      params: { page: 1, per_page: 10 },
     };
   },
 
@@ -49,6 +50,11 @@ export default {
       getRooms: 'room/getRooms',
     }),
 
+    ...mapMutations({
+      setCurrentRoom: 'room/SET_CURRENT_ROOM',
+      handleUserModalState: 'modal/handleUserModalState',
+    }),
+
     nextPageClicked() {
       if (this.totalCount / this.params.per_page < this.params.page) return;
       this.params.page += 1;
@@ -66,6 +72,11 @@ export default {
         this.params.page = parseInt(headers['x-current-page'], 10);
         this.totalCount = parseInt(headers['x-total'], 10);
       });
+    },
+
+    handleJoinRoom(room) {
+      this.setCurrentRoom(room);
+      this.$emit('joinRoomClicked');
     },
   },
 
