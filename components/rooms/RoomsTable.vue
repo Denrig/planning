@@ -30,7 +30,7 @@ export default {
         { text: '' },
       ],
       totalCount: 0,
-      params: { page: 1, per_page: 10 },
+      params: { page: 1, per_page: 5 },
     };
   },
 

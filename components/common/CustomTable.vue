@@ -6,7 +6,7 @@
           th.table-header(v-for="(header, index) in headers" :key="index") {{header.text}}
       tbody(ref="tableBody")
         template(v-if="data.length > 0")
-          tr.table-row(v-for="(props, index) in data" :key="index")
+          tr.table-row(v-for="(props, index) in localItems" :key="index")
             slot(name="items" v-bind:props="props")
           Loader
         tr.no-data(v-else)
@@ -42,10 +42,21 @@ export default {
     },
   },
 
+  data() {
+    return {
+      localItems: [],
+    };
+  },
+
   watch: {
     loading(val) {
       if (val) this.slideItemsRight();
-      else setTimeout(() => this.slideItemsLeft(), 1000);
+      else {
+        setTimeout(() => {
+          this.localItems = this.data;
+          this.slideItemsLeft();
+        }, 1000);
+      }
     },
   },
 
