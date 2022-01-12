@@ -13,6 +13,7 @@ export const state = () => ({
 });
 
 export const getters = {
+  loading: (state) => state.roomLoading,
   rooms: (state) => state.rooms,
   currentRoom: (state) => state.currentRoom,
   players: (state) => state.players,
@@ -75,6 +76,20 @@ export const actions = {
       });
   },
 
+  getRooms({ commit, state }, params) {
+    commit(TYPES.ROOM_REQUEST);
+    return this.$api.rooms
+      .getRooms(params)
+      .then((response) => {
+        commit(TYPES.SET_ROOMS, response);
+        return response.headers;
+      })
+      .catch((errors) => {
+        commit(TYPES.ROOM_ERROR, errors);
+        return Promise.reject(errors);
+      });
+  },
+
   addUserToRoom({ commit }, user) {
     commit(TYPES.ADD_USER_TO_ROOM, user);
   },
@@ -102,6 +117,11 @@ export const mutations = {
 
   [TYPES.ADD_USER_TO_ROOM](state, user) {
     state.players.push(user);
+  },
+
+  [TYPES.SET_ROOMS](state, response) {
+    state.roomLoading = false;
+    state.rooms = response.data;
   },
 
   [TYPES.SET_PLAYERS](state, players) {

@@ -14,6 +14,10 @@ const RoomsRepository = (axios) => ({
   getCurrentRoom(id) {
     return axios.get(`v1/rooms/${id}`).then((resp) => resp.data);
   },
+
+  getRooms(params) {
+    return axios.get('v1/rooms', { params });
+  },
 });
 
 export default RoomsRepository;

@@ -1,18 +1,17 @@
 <template lang="pug">
   .rooms-list-page
-    CustomTable(:headers="headers" :data="[1,2,3,4]" :loading="true")
-      td.table-column 2
+    RoomsTable
 
 </template>
 <script>
 import Button from '@/components/common/Button.vue';
-import CustomTable from '@/components/common/CustomTable.vue';
+import RoomsTable from '@/components/rooms/RoomsTable.vue';
 
 export default {
 
   components: {
     Button,
-    CustomTable,
+    RoomsTable,
   },
 
   data() {

@@ -6,17 +6,16 @@
           th.table-header(v-for="(header, index) in headers" :key="index") {{header.text}}
       tbody(ref="tableBody")
         template(v-if="data.length > 0")
-          tr.table-row(v-for="(row, index) in data" :key="index")
-            slot
+          tr.table-row(v-for="(props, index) in data" :key="index")
+            slot(name="items" v-bind:props="props")
           Loader
         tr.no-data(v-else)
           td(:colspan="headers.length") No data available!
     div.table-footer
-      button.app-button(@click="$emit('nextPageClicked')")
-        BIcon(icon="arrow-bar-left" font-scale="2")
       button.app-button(@click="$emit('previousPageClicked')")
+        BIcon(icon="arrow-bar-left" font-scale="2")
+      button.app-button(@click="$emit('nextPageClicked')")
         BIcon(icon="arrow-bar-right" font-scale="2")
-
 </template>
 <script>
 import Loader from './Loader.vue';
@@ -46,7 +45,7 @@ export default {
   watch: {
     loading(val) {
       if (val) this.slideItemsRight();
-      else this.slideItemsLeft();
+      else setTimeout(() => this.slideItemsLeft(), 1000);
     },
   },
 
