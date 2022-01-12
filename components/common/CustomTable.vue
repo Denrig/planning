@@ -1,115 +1,134 @@
 <template lang="pug">
-  v-card(flat).v-card--custom-table
-    v-card-title(v-if="showTitle").ml-2
-      slot(name="header")
+  .table-wrapper
+    table.custom-table
+      thead
+        tr.table-headers
+          th.table-header(v-for="(header, index) in headers" :key="index") {{header.text}}
+      tbody(ref="tableBody")
+        tr.table-row
+          td.table-column Columnaa
+          td.table-column Columnaa
+          td.table-column Columnaa
+          td.table-column Columnaa
+          td.table-column Columnaa
+        tr.table-row
+          td.table-column Columnaa
+          td.table-column Columnaa
+          td.table-column Columnaa
+          td.table-column Columnaa
+          td.table-column Columnaa
+        tr.table-row
+          td.table-column Columnaa
+          td.table-column Columnaa
+          td.table-column Columnaa
+          td.table-column Columnaa
+          td.table-column Columnaa
+        tr.table-row
+          td.table-column Columnaa
+          td.table-column Columnaa
+          td.table-column Columnaa
+          td.table-column Columnaa
+          td.table-column Columnaa
+    div.table-footer
+      button.app-button(@click="slideItemsLeft") Previous Page
+      button.app-button(@click="slideItemsRight") Next Page
 
-    v-data-table(
-      ref="vDataTable"
-      :headers='headers'
-      :items='tableItems'
-      :search="search"
-      :footer-props="{ 'items-per-page-options': defaultRowsPerPage }"
-      :server-items-length="totalItems"
-      :options.sync="options"
-      :hide-default-footer="hideFooter"
-    ).elevation-0.v-data-table--custom-table
-
-      template(slot='item' slot-scope='props')
-        tr
-          slot(name="items" v-bind:props="props")
-      template(slot='no-data')
-        tr(v-if="isLoading")
-          td(v-for="h in headers")
-            v-progress-circular(indeterminate)
-      v-alert(v-if="showAlert" slot='no-results' :value='true' color='primary' icon='warning')
-        | Your search for &quot;{{ search }}&quot; found no results.
 </template>
-
 <script>
 export default {
   name: 'CustomTable',
-
   props: {
-    showTitle: {
-      type: Boolean,
-      default: true,
-    },
-    showAlert: {
-      type: Boolean,
-      default: false,
-    },
     headers: {
       type: Array,
       default: () => [],
     },
-    items: {
-      type: Array,
-      default: () => [],
-    },
-    search: {
-      type: String,
-      default: null,
-    },
-    showAll: {
-      type: Boolean,
-      default: false,
-    },
-    isLoading: {
-      type: Boolean,
-      default: false,
-    },
-    totalItems: {
-      type: Number,
-      default: 0,
-    },
-    getItems: null,
-    params: {},
-    hideFooter: false,
   },
-
-  data: () => ({
-    defaultRowsPerPage: [5, 10, 20, 25],
-    options: {
-      itemsPerPage: 5,
-    },
-  }),
-
-  computed: {
-    tableItems() {
-      return this.isLoading ? [] : this.items;
-    },
-  },
-
-  watch: {
-    options: {
-      handler() {
-        this.fetchItems();
-      },
-      deep: true,
-    },
-
-    params: {
-      handler() {
-        this.fetchItems();
-      },
-      deep: true,
-    },
-
-    search: {
-      handler() {
-        this.options.page = 1;
-      },
-    },
-  },
-
   methods: {
-    fetchItems() {
-      this.$emit('getItems', {
-        ...this.params,
-        page: this.options.page,
-        per_page: this.options.itemsPerPage,
+    slideItemsRight() {
+      Array.from(this.$refs.tableBody.children).forEach((child, index) => {
+        setTimeout(() => {
+          child.classList.remove('sliding-left');
+          child.classList.add('sliding-right');
+        }, index * 100);
+      });
+    },
+
+    slideItemsLeft() {
+      Array.from(this.$refs.tableBody.children).forEach((child, index) => {
+        setTimeout(() => {
+          child.classList.remove('sliding-right');
+          child.classList.add('sliding-left');
+        }, index * 100);
       });
     },
   },
 };
 </script>
+<style lang="scss">
+.table-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 70%;
+}
+
+.custom-table {
+  overflow: hidden;
+  width: 100%;
+  border: 1px solid $black ;
+  border-radius: 20px 20px 0 0;
+  border-collapse: separate;
+  font-style: $bold;
+  background-color: $grey;
+
+  .table-headers {
+    color: $white;
+  }
+
+  .table-header{
+    width: 100px;
+    text-align: center;
+    border-right: 1px solid $light-grey;
+    border-bottom: 1px solid $white;
+    padding: 10px;
+    &:last-of-type{
+      border-right: none;
+    }
+  }
+
+  .table-row {
+    position: relative;
+    &:nth-of-type(even) {
+      background-color: $yellow;
+    }
+
+    &:nth-of-type(odd) {
+      background-color: $pink;
+      color: $white;
+    }
+
+    &.sliding-left {
+      animation: sliding-left 1s forwards
+    }
+
+    &.sliding-right {
+      animation: sliding-right 1s forwards
+    }
+
+    .table-column {
+      text-align: center;
+      padding: 10px;
+    }
+  }
+}
+.table-footer {
+  display: flex;
+  width: 100%;
+  border: 1px solid $black;
+  border-top: none;
+  justify-content: space-between;
+  background-color: $grey;
+  border-radius: 0 0 20px 20px;
+}
+</style>
