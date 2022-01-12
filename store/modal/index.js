@@ -3,7 +3,7 @@ import { handleModalState } from '~/utils/utils.js';
 export const state = () => ({
   createRoomModal: false,
   userModal: false,
-  roomsModal: true,
+  roomsModal: false,
 });
 
 export const getters = {
