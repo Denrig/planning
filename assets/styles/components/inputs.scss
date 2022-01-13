@@ -1,10 +1,19 @@
 .input-group {
+  margin: 10px auto;
+
   input {
-    margin: 10px auto;
     border-radius: 10px;
     border: 1px solid $light-grey;
     text-align: center;
-    text-transform: uppercase;
+
+    &.invalid {
+      border: 1px solid red;
+    }
+  }
+  .error {
+    margin: 3px;
+    font-size: 10px;
+    color: red;
   }
 
   label{
@@ -43,6 +52,7 @@
     }
   }
 }
+
 
 .app-button{
   border: none;

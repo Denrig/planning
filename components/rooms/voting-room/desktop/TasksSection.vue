@@ -12,7 +12,7 @@
             b-col
               ValidationProvider.input-group.text(
                 rules="required",
-                name="taskTitle",
+                name="title",
                 v-slot="{ errors, invalid, dirty }",
                 tag="div"
               )
@@ -20,8 +20,9 @@
                   type="string",
                   v-model="form.text",
                   placeholder="Task's title",
-                  :class="{ invalid: invalid && dirty }"
+                  :class="{ invalid: errors[0] }"
                 )
+                span.error {{errors[0]}}
           b-row
             b-col
               button.app-button.w-100.cancel-task(

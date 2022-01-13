@@ -32,13 +32,12 @@
               v-slot="{ errors, invalid, dirty }",
               tag="div"
             )
-              label(for="input_email")
               input#code(
                 type="string",
                 placeholder="CODE",
                 v-model="code",
                 :maxlength="6",
-                :class="{ invalid: invalid && dirty }"
+                :class="{ invalid: errors[0] }"
               )
     MenuItem.create-room-section(backgroundColor="#ffcf35")
       template(v-slot:header)
@@ -48,7 +47,7 @@
         .details-text
           span This section is used for creating a new planning room.
           span Click on the 'Create Room' button and you
-          | will be redirected to the room creation page.
+          |  will be redirected to the room creation page.
         button.w-100.app-button.create-room-button.border-none(
           @click="handleCreateRoomClicked"
         ) Create Room
@@ -155,6 +154,15 @@ export default {
     position: fixed;
     display: flex;
     z-index: 1;
+  }
+
+  #code {
+    margin: 0 auto;
+    text-transform: uppercase;
+
+    &.invalid {
+      box-shadow: inset 0 0 0 3px red;
+    }
   }
 
   .create-room-button {

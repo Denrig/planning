@@ -17,7 +17,7 @@
               b-col
                 ValidationProvider.input-group.text(
                   rules="required",
-                  name="roomsName",
+                  name="name",
                   v-slot="{ errors, invalid, dirty }",
                   tag="div"
                 )
@@ -25,8 +25,9 @@
                     type="string",
                     v-model="form.name",
                     placeholder="Room's name",
-                    :class="{ invalid: invalid && dirty }"
+                    :class="{ invalid: errors[0] }"
                   )
+                  span.error {{ errors[0] }}
             //- b-row TO DO: Enable this in a future iteration
             //-   b-col
             //-     ValidationProvider.input-group.text(

@@ -16,7 +16,7 @@
             b-row
               ValidationProvider.input-group.text(
                 rules="required",
-                name="roomsName",
+                name="name",
                 v-slot="{ errors, invalid, dirty }",
                 tag="div"
               )
@@ -26,6 +26,7 @@
                   placeholder="Your Name",
                   :class="{ invalid: invalid && dirty }"
                 )
+                span.error {{errors[0]}}
           b-row
             label.info-text Choose Your Character Image
             HorizontalSelect.character-select(
