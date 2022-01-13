@@ -134,6 +134,7 @@ export default {
     },
 
     handleUserActionCompleted() {
+      this.handleUserModalState(false);
       this.$router.push('voting-room');
     },
 

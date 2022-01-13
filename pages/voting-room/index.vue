@@ -39,7 +39,6 @@ export default {
       .catch(() => {
         this.$router.push('/');
       });
-    this.initLayoutModule();
   },
 
   created() {
