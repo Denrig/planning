@@ -104,8 +104,8 @@ export default {
   },
 
   watch: {
-    userModal() {
-      if (this.action === 'update') {
+    userModal(val) {
+      if (this.action === 'update' && val) {
         this.getCurrentUser().then(() => {
           this.form = JSON.parse(JSON.stringify(this.currentUser));
           this.$refs.characterSelect.selectByIndex(

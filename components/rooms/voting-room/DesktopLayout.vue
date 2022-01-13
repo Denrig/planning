@@ -1,7 +1,7 @@
 <template lang="pug">
 .desktop-layout
   .voting-stage
-    .code {{currentRoom.code}}
+    .code {{currentRoom.name}} - {{currentRoom.code}}
     .players-section
       Player(v-for="player in players"
       :key="player.id"
@@ -38,13 +38,14 @@ export default {
 </script>
 <style lang="scss">
 .code {
+  left: 50%;
+  transform: translateX(-50%);
+
   display: flex;
   justify-content: center;
   align-items: center;
   position: absolute;
-  left: calc(50% - 100px);
 
-  width: 100px;
   height: 30px;
   background-color: $yellow;
 

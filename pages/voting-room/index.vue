@@ -8,6 +8,7 @@ import { mapGetters, mapActions } from 'vuex';
 import DesktopLayout from '@/components/rooms/voting-room/DesktopLayout.vue';
 import MobileLayout from '@/components/rooms/voting-room/MobileLayout.vue';
 import { WebSocketHandler } from '@/services/WebSocketHandler';
+import { notifyError } from '~/utils/notificationsUtils.js';
 
 export default {
   components: {
@@ -35,10 +36,11 @@ export default {
   mounted() {
     this.getCurrentRoom()
       .then(() => this.getVotesForTask(this.currentTask?.id))
-      .then(() => this.subscribeToCable())
-      .catch(() => {
+      .catch((errors) => {
+        notifyError(errors);
         this.$router.push('/');
       });
+    this.subscribeToCable();
   },
 
   created() {
