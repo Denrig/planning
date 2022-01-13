@@ -5,7 +5,7 @@
     modal-title="Create User",
     modal-description="Create User",
     v-show="userModal",
-    :showCloseButton="false"
+    @close="handleUserModalState(false)"
   )
     template(v-slot:modal-header)
       h1.info-text User Info
@@ -58,7 +58,7 @@
             input.app-button.w-100.start-voting(type="submit" value="Let's Go!")
 </template>
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions, mapMutations } from 'vuex';
 import Modal from '@/components/common/Modal.vue';
 import HorizontalSelect from '@/components/common/HorizontalSelect.vue';
 import CHARACTER_IMAGES from '@/utils/character-utils.js';
@@ -121,8 +121,11 @@ export default {
       createUser: 'user/createUser',
       updateUser: 'user/updateUser',
       getCurrentUser: 'user/getCurrentUser',
-      handleUserModalState: 'modal/handleUserModal',
       joinRoom: 'room/joinRoom',
+    }),
+
+    ...mapMutations({
+      handleUserModalState: 'modal/handleUserModalState',
     }),
 
     handleUserAction() {

@@ -42,12 +42,7 @@ export default {
   height: 200px;
   overflow-x: scroll;
   overflow-y: hidden;
-
-  &::-webkit-scrollbar {
-    width: 0;
-    height: 0;
-    background: transparent;
-  }
+  cursor: pointer;
 
   .item {
     display: flex;
