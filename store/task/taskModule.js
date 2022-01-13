@@ -4,7 +4,6 @@ import { notifyRequestError } from '~/utils/notificationsUtils.js';
 
 export const state = () => ({
   tasks: [],
-  taskLoading: false,
 });
 
 export const getters = {
@@ -42,21 +41,17 @@ export const actions = {
 };
 
 export const mutations = {
-  [TYPES.TASK_REQUEST](state) {
-    state.taskLoading = true;
+  [TYPES.TASK_REQUEST]() {
   },
 
-  [TYPES.TASK_SUCCESS](state) {
-    state.taskLoading = false;
+  [TYPES.TASK_SUCCESS]() {
   },
 
   [TYPES.TASK_ERROR](state, errors) {
-    state.taskLoading = false;
     notifyRequestError(this, errors.response);
   },
 
   [TYPES.SET_TASKS](state, tasks) {
-    state.taskLoading = false;
     state.tasks = tasks;
   },
 
