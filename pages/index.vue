@@ -166,6 +166,10 @@ export default {
     background-color: $yellow;
     color: $grey;
     font-weight: $bold;
+
+    span {
+      cursor: pointer;
+    }
   }
 
   .create-room-section {

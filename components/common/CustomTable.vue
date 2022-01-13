@@ -6,7 +6,7 @@
           th.table-header(v-for="(header, index) in headers" :key="index") {{header.text}}
       tbody(ref="tableBody")
         template(v-if="data.length > 0")
-          tr.table-row(v-for="(props, index) in localItems" :key="index")
+          tr.table-row.right(v-for="(props, index) in localItems" :key="index")
             slot(name="items" v-bind:props="props")
           Loader
         tr.no-data(v-else)
@@ -53,8 +53,9 @@ export default {
       if (val) this.slideItemsRight();
       else {
         setTimeout(() => {
-          this.localItems = this.data;
-          this.slideItemsLeft();
+          Promise.resolve()
+            .then(() => { this.localItems = this.data; })
+            .then(() => this.slideItemsLeft());
         }, 1000);
       }
     },
@@ -62,19 +63,24 @@ export default {
 
   methods: {
     slideItemsRight() {
-      Array.from(this.$refs.tableBody.children).forEach((child, index) => {
-        setTimeout(() => {
-          child.classList.remove('sliding-left');
-          child.classList.add('sliding-right');
-        }, index * 100);
+      this.slideItems((child) => {
+        child.classList.remove('sliding-left');
+        child.classList.add('sliding-right');
       });
     },
 
     slideItemsLeft() {
+      this.slideItems((child) => {
+        child.classList.remove('right');
+        child.classList.remove('sliding-right');
+        child.classList.add('sliding-left');
+      });
+    },
+
+    slideItems(callback) {
       Array.from(this.$refs.tableBody.children).forEach((child, index) => {
         setTimeout(() => {
-          child.classList.remove('sliding-right');
-          child.classList.add('sliding-left');
+          callback(child);
         }, index * 100);
       });
     },
@@ -136,6 +142,10 @@ export default {
       animation: sliding-right 1s forwards
     }
 
+    &.right {
+      right: -100%;
+    }
+
     .table-column {
       text-align: center;
       padding: 10px;
@@ -155,11 +165,11 @@ export default {
   }
 
   .loader {
-top: 0;
-left: 0;
-bottom: 0;
-right: 0;
-margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
   }
 }
 
