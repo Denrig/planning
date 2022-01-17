@@ -17,7 +17,7 @@ export const actions = {
   getCurrentUser({ getters, commit }) {
     commit(TYPES.USER_REQUEST);
     return this.$api.users
-      .getCurrentUser(getters.currentUserId)
+      .getCurrentUser(StorageService.getFromStorage(STORAGE_KEYS.USER_ID_KEY))
       .then((response) => {
         commit(TYPES.SET_CURRENT_USER, response);
       })

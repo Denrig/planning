@@ -78,11 +78,13 @@ export default {
     },
 
     slideItems(callback) {
-      Array.from(this.$refs.tableBody.children).forEach((child, index) => {
-        setTimeout(() => {
-          callback(child);
-        }, index * 100);
-      });
+      if (this.$refs.tableBody) {
+        Array.from(this.$refs.tableBody.children).forEach((child, index) => {
+          setTimeout(() => {
+            callback(child);
+          }, index * 100);
+        });
+      }
     },
   },
 };

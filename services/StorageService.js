@@ -15,5 +15,6 @@ export const StorageService = {
     if (process.client) {
       return localStorage.getItem(key);
     }
+    return null;
   },
 };

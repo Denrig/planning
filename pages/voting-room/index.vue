@@ -34,17 +34,13 @@ export default {
   },
 
   mounted() {
-    this.getCurrentRoom()
+    this.getCurrentUser()
+      .then(() => this.getCurrentRoom())
       .then(() => this.getVotesForTask(this.currentTask?.id))
-      .catch((errors) => {
-        notifyError(errors);
+      .catch(() => {
         this.$router.push('/');
       });
     this.subscribeToCable();
-  },
-
-  created() {
-    if (!this.currentUserId) this.$router.push('/');
   },
 
   methods: {
