@@ -16,7 +16,6 @@
     .players-section {
       display: grid;
       grid-template-columns: repeat(5, auto);
-      grid-auto-flow: column;
       height: calc(100vh - 60px);
       width: calc(100vw - 20vw);
     }  

@@ -36,11 +36,11 @@ export default {
   mounted() {
     this.getCurrentUser()
       .then(() => this.getCurrentRoom())
+      .then(() => this.subscribeToCable())
       .then(() => this.getVotesForTask(this.currentTask?.id))
       .catch(() => {
         this.$router.push('/');
       });
-    this.subscribeToCable();
   },
 
   methods: {
