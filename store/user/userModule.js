@@ -23,6 +23,7 @@ export const actions = {
       })
       .catch((errors) => {
         commit(TYPES.USER_ERROR, errors);
+        StorageService.deleteFromStorage(STORAGE_KEYS.USER_ID_KEY);
         return Promise.reject(errors);
       });
   },
