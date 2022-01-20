@@ -19,7 +19,7 @@ export const WebSocketHandler = {
         store.commit('task/UPDATE_TASK', data.task);
         break;
       case TYPES.PLAYER_JOINED:
-        store.dispatch('room/addUserToRoom', data.user);
+        store.dispatch('room/userAction', data);
         break;
       case TYPES.PLAYER_VOTED:
         store.dispatch('voting/playerVoted', data);
@@ -34,13 +34,5 @@ export const WebSocketHandler = {
       default:
         console.log('Unknown');
     }
-  },
-
-  currentVoteRequest(store) {
-    return {
-      user_id: store.getters['user/currentUserId'],
-      room_id: store.getters['room/currentRoom'].id,
-      vote: store.state.room.currentVote,
-    };
   },
 };

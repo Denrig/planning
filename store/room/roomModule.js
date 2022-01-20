@@ -2,7 +2,7 @@ import Vue from 'vue';
 import { TYPES } from './roomTypes';
 import { STORAGE_KEYS } from '~/static/storage-keys';
 import { StorageService } from '~/services/StorageService';
-import { notifyRequestError, notifySuccess } from '~/utils/notificationsUtils.js';
+import { notifyRequestError } from '~/utils/notificationsUtils.js';
 
 export const state = () => ({
   rooms: [],
@@ -21,6 +21,7 @@ export const getters = {
 };
 
 export const actions = {
+  // Api actions
   createRoom({ commit, rootState }, payload) {
     commit(TYPES.ROOM_REQUEST);
     payload.user_id = rootState.user.currentUserId;
@@ -90,8 +91,9 @@ export const actions = {
       });
   },
 
-  addUserToRoom({ commit }, user) {
-    commit(TYPES.ADD_USER_TO_ROOM, user);
+  // Websocket Actions
+  userAction({ commit }, data) {
+    commit(TYPES.USER_ACTION, data);
   },
 };
 
@@ -115,10 +117,6 @@ export const mutations = {
     StorageService.saveToStorage(STORAGE_KEYS.SESSION_ID_KEY, room.id);
   },
 
-  [TYPES.ADD_USER_TO_ROOM](state, user) {
-    state.players.push(user);
-  },
-
   [TYPES.SET_ROOMS](state, response) {
     state.roomLoading = false;
     state.rooms = response.data;
@@ -128,6 +126,7 @@ export const mutations = {
     state.players = players;
   },
 
+  // Websocket mutations
   [TYPES.PLAYER_VOTED](state, data) {
     const user = state
       .players
@@ -142,5 +141,14 @@ export const mutations = {
       Vue.set(player, 'voted', false);
       Vue.set(player, 'vote', null);
     });
+  },
+
+  [TYPES.USER_ACTION](state, data) {
+    const index = state.players.findIndex((player) => player.id === data.user.id);
+
+    if (index === -1) {
+      state.players.push(data.user);
+    } else if (data.role === 'spectator') state.players.splice(index, 1);
+    else Vue.set(state.players, index, data.user);
   },
 };
