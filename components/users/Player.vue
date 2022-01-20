@@ -3,7 +3,7 @@
   .player
     img.avatar(:src="userImage")
     .name {{user.name}}
-  .vote-display(:class="{ active: showVotes && user.voted === true }" ref="vote-display")
+  .vote-display(:class="{ active: userVoted }" ref="vote-display")
     .circle
       span {{ user.vote }}
     .handle
@@ -27,6 +27,10 @@ export default {
 
     user() {
       return this.player(this.userId);
+    },
+
+    userVoted() {
+      return this.showVotes && this.user.voted === true;
     },
 
     userImage() {
