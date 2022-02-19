@@ -41,6 +41,7 @@
     font-size: $big-text;
   }
   .kick-button {
+    cursor: pointer;
     transform: scale(2);
     font-weight: bolder;
     color: red;
