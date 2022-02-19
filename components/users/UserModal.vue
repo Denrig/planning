@@ -28,6 +28,27 @@
                 )
                 span.error {{errors[0]}}
           b-row
+            ValidationProvider.input-group.text(
+              rules="required",
+              name="role",
+              v-slot="{ errors, validate }",
+              tag="div"
+            )
+              label.info-text Choose Your Role
+              HorizontalSelect.role-select(
+                :items="userRoles",
+                @itemSelected="handleRoleSelect"
+                @validate="validate"
+              )
+                template(v-slot:default="props")
+                  img(
+                    :src="require(`~/assets/images/roles/${props.item.image}`)",
+                    height=100,
+                    width=100
+                  )
+                  .role-name {{ props.item.role }}
+              span.error {{errors[0]}}
+          b-row(v-if="displayImages")
             label.info-text Choose Your Character Image
             HorizontalSelect.character-select(
               :items="characterImages",
@@ -41,19 +62,6 @@
                   width=100
                 )
 
-          b-row
-            label.info-text Choose Your Role
-            HorizontalSelect.role-select(
-              :items="userRoles",
-              @itemSelected="handleRoleSelect"
-            )
-              template(v-slot:default="props")
-                img(
-                  :src="require(`~/assets/images/roles/${props.item.image}`)",
-                  height=100,
-                  width=100
-                )
-                .role-name {{ props.item.role }}
           b-row
             input.app-button.w-100.start-voting(type="submit" value="Let's Go!")
 </template>
@@ -81,6 +89,7 @@ export default {
   data() {
     return {
       form: {},
+      displayImages: false,
       characterImages: CHARACTER_IMAGES,
       userRoles: [
         {
@@ -147,7 +156,9 @@ export default {
     },
 
     handleRoleSelect(role) {
+      this.displayImages = role.role === 'player';
       this.form.role = role.role;
+      this.$emit('input', role.role);
     },
 
     joinRoomWithRole() {

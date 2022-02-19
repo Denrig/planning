@@ -24,6 +24,7 @@ export default {
       if (target.parentElement._prevClass === 'item') { element = target.parentElement; }
       element.classList.add('selected');
 
+      this.$emit('validate', item);
       this.$emit('itemSelected', item);
     },
 
