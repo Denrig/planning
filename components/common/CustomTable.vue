@@ -163,7 +163,7 @@ export default {
   }
 
   tbody {
-    height: 100px;
+    min-height: 50px;
     position: relative;
   }
 
