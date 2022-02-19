@@ -49,19 +49,26 @@
                   .role-name {{ props.item.role }}
               span.error {{errors[0]}}
           b-row(v-if="displayImages")
-            label.info-text Choose Your Character Image
-            HorizontalSelect.character-select(
-              :items="characterImages",
-              @itemSelected="handlePhotoChange",
-              ref="characterSelect"
+            ValidationProvider.input-group.text(
+              rules="required",
+              name="image",
+              v-slot="{ errors, validate }",
+              tag="div"
             )
-              template(v-slot:default="props")
-                img(
-                  :src="`/characters/${props.item}`",
-                  height=150,
-                  width=100
-                )
-
+              label.info-text Choose Your Character Image
+              HorizontalSelect.character-select(
+                :items="characterImages",
+                @itemSelected="handlePhotoChange",
+                @validate="validate"
+                ref="characterSelect"
+              )
+                template(v-slot:default="props")
+                  img(
+                    :src="`/characters/${props.item}`",
+                    height=150,
+                    width=100
+                  )
+              span.error {{errors[0]}}
           b-row
             input.app-button.w-100.start-voting(type="submit" value="Let's Go!")
 </template>

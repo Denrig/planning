@@ -73,6 +73,8 @@ export default {
 </script>
 <style lang="scss">
 #exit-button {
+  cursor: pointer;
+  z-index: 100;
   top: 0.2rem;
   left: 0.2rem;
 }
