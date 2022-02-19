@@ -2,7 +2,7 @@ import Vue from 'vue';
 import { TYPES } from './roomTypes';
 import { STORAGE_KEYS } from '~/static/storage-keys';
 import { StorageService } from '~/services/StorageService';
-import { notifyRequestError } from '~/utils/notificationsUtils.js';
+import { notifyRequestError, notifyError } from '~/utils/notificationsUtils.js';
 
 export const state = () => ({
   rooms: [],
@@ -63,6 +63,18 @@ export const actions = {
       });
   },
 
+  leaveRoom({ commit }, payload) {
+    commit(TYPES.ROOM_REQUEST);
+    return this.$api.rooms
+      .leaveRoom(payload)
+      .then(() => {
+        commit(TYPES.ROOM_SUCCESS);
+      })
+      .catch((errors) => {
+        commit(TYPES.ROOM_ERROR, errors);
+      });
+  },
+
   getCurrentRoom({ commit }) {
     return this.$api.rooms
       .getCurrentRoom(StorageService.getFromStorage(STORAGE_KEYS.SESSION_ID_KEY))
@@ -77,7 +89,7 @@ export const actions = {
       });
   },
 
-  getRooms({ commit, state }, params) {
+  getRooms({ commit }, params) {
     commit(TYPES.ROOM_REQUEST);
     return this.$api.rooms
       .getRooms(params)
@@ -91,9 +103,23 @@ export const actions = {
       });
   },
 
+  clearLocalStorage() {
+    StorageService.deleteFromStorage(STORAGE_KEYS.CURRENT_ROLE);
+    StorageService.deleteFromStorage(STORAGE_KEYS.SESSION_ID_KEY);
+  },
+
   // Websocket Actions
   userAction({ commit }, data) {
     commit(TYPES.USER_ACTION, data);
+  },
+
+  playerLeft({ commit, rootState }, data) {
+    if (rootState.user.currentUser.id === data.user.id) {
+      this.dispatch('room/clearLocalStorage');
+      $nuxt.$router.push('/');
+      notifyError(this, 'You have been kicked');
+    }
+    commit(TYPES.PLAYER_LEFT, data);
   },
 };
 
@@ -150,5 +176,11 @@ export const mutations = {
       state.players.push(data.user);
     } else if (data.role === 'spectator') state.players.splice(index, 1);
     else Vue.set(state.players, index, data.user);
+  },
+
+  [TYPES.PLAYER_LEFT](state, data) {
+    const index = state.players.findIndex((player) => player.id === data.user.id);
+
+    if (index > -1) { state.players.splice(index, 1); }
   },
 };

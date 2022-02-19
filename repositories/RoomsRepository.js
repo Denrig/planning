@@ -11,6 +11,10 @@ const RoomsRepository = (axios) => ({
     return axios.post('v1/join_room', payload).then((resp) => resp.data);
   },
 
+  leaveRoom(payload) {
+    return axios.delete('v1/join_room', { data: payload }).then((resp) => resp.data);
+  },
+
   getCurrentRoom(id) {
     return axios.get(`v1/rooms/${id}`).then((resp) => resp.data);
   },

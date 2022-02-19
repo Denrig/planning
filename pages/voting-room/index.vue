@@ -1,5 +1,7 @@
 <template lang="pug">
 .voting-room.h-100
+  #exit-button.position-fixed(@click="handleLeaveRoom")
+    BIcon(icon="door-open-fill" font-scale="1.5")
   DesktopLayout(v-if="true")
   MobileLayout(v-else)
 </template>
@@ -8,7 +10,6 @@ import { mapGetters, mapActions } from 'vuex';
 import DesktopLayout from '@/components/rooms/voting-room/DesktopLayout.vue';
 import MobileLayout from '@/components/rooms/voting-room/MobileLayout.vue';
 import { WebSocketHandler } from '@/services/WebSocketHandler';
-import { notifyError } from '~/utils/notificationsUtils.js';
 
 export default {
   components: {
@@ -16,22 +17,12 @@ export default {
     MobileLayout,
   },
 
-  computed: {
-    ...mapGetters({
-      isDesktop: 'layout/isDesktop',
-      currentRoom: 'room/currentRoom',
-      currentUserId: 'user/currentUserId',
-      currentTask: 'task/currentVotingTask',
-    }),
-  },
-
-  channels: {
-    RoomChannel: {
-      received(data) {
-        WebSocketHandler.execute(this, data);
-      },
-    },
-  },
+  computed: mapGetters({
+    isDesktop: 'layout/isDesktop',
+    currentRoom: 'room/currentRoom',
+    currentUserId: 'user/currentUserId',
+    currentTask: 'task/currentVotingTask',
+  }),
 
   mounted() {
     this.getCurrentUser()
@@ -43,12 +34,22 @@ export default {
       });
   },
 
+  channels: {
+    RoomChannel: {
+      received(data) {
+        WebSocketHandler.execute(this, data);
+      },
+    },
+  },
+
   methods: {
     ...mapActions({
       initLayoutModule: 'layout/initLayoutModule',
       getCurrentRoom: 'room/getCurrentRoom',
       getCurrentUser: 'user/getCurrentUser',
       getVotesForTask: 'voting/getVotesForTask',
+      clearLocalStorage: 'room/clearLocalStorage',
+      leaveRoom: 'room/leaveRoom',
     }),
 
     subscribeToCable() {
@@ -57,6 +58,22 @@ export default {
         id: this.currentRoom.id,
       });
     },
+
+    handleLeaveRoom() {
+      this.leaveRoom({
+        room_id: this.currentRoom.id,
+        user_id: this.currentUserId,
+      }).then(() => {
+        this.clearLocalStorage();
+        this.$router.push('/');
+      });
+    },
   },
 };
 </script>
+<style lang="scss">
+#exit-button {
+  top: 0.2rem;
+  left: 0.2rem;
+}
+</style>

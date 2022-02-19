@@ -32,10 +32,19 @@
 }
 
 .player {
+  .d-flex {
+    align-items: center;
+  }
   .name {
     text-align: center;
     font-weight: $bold;
     font-size: $big-text;
+  }
+  .kick-button {
+    transform: scale(2);
+    font-weight: bolder;
+    color: red;
+    margin: 5px;
   }
 }
 
