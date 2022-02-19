@@ -5,7 +5,7 @@
         tr.table-headers
           th.table-header(v-for="(header, index) in headers" :key="index") {{header.text}}
       tbody(ref="tableBody")
-        template(v-if="data.length > 0")
+        template(v-if="data.length > 0 || loading")
           tr.table-row.right(v-for="(props, index) in localItems" :key="index")
             slot(name="items" v-bind:props="props")
           Loader
@@ -163,6 +163,7 @@ export default {
   }
 
   tbody {
+    height: 100px;
     position: relative;
   }
 
