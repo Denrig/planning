@@ -3,12 +3,7 @@
 
   .player
     img.avatar(:src="userImage")
-    .d-flex.justify-content-center
-      .name {{user.name}}
-      span.kick-button(
-        v-if="displayKickButton"
-        @click="kickPlayer"
-      ) &times;
+    .name {{user.name}}
   .vote-display(:class="{ active: userVoted }" ref="vote-display")
     .circle
       span {{ user.vote }}
@@ -29,7 +24,6 @@ export default {
     ...mapGetters({
       showVotes: 'voting/showVotes',
       player: 'room/getPlayer',
-      currentRoom: 'room/currentRoom',
       currentUserId: 'user/currentUserId',
     }),
 
@@ -47,21 +41,6 @@ export default {
 
     userImage() {
       return this.user.character_image ? `/characters/${this.user.character_image}` : '';
-    },
-  },
-
-  methods: {
-    ...mapActions({
-      leveRoom: 'room/leaveRoom',
-    }),
-
-    kickPlayer() {
-      if (confirm('Do you want to kick this player?')) {
-        this.leveRoom({
-          user_id: this.userId,
-          room_id: this.currentRoom.id,
-        });
-      }
     },
   },
 };

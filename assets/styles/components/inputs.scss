@@ -98,3 +98,11 @@
   font-weight: $bold;
   margin: 3px auto
 }
+
+.kick-button {
+  cursor: pointer;
+  transform: scale(2);
+  font-weight: bolder;
+  color: red;
+  margin: 5px;
+}
