@@ -1,8 +1,8 @@
 <template lang="pug">
   .player-list-item.d-flex.m-2.justify-content-around.align-items-center
+    img(:src="playerImage")
     .name {{ player.name }}
     span.kick-button(
-      v-if="displayKickButton"
       @click="kickPlayer"
     ) &times;
 </template>
@@ -52,6 +52,14 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+.player-list-item {
+  border-radius: 24px;
+  border: 1px solid black;
 
+  img {
+    height: 100px;
+    width: 80px;
+  }
+}
 </style>

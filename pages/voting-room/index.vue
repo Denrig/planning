@@ -3,8 +3,8 @@
   button#menu-button.position-absolute(v-b-toggle.sidebar-1)
     BIcon(icon="card-checklist" font-scale="1.5")
   b-sidebar#sidebar-1.p-1(shadow)
-    PlayerListItem(v-for="player in players" :player="player")
     button.app-button.w-100(@click="handleLeaveRoom") Leave Room
+    PlayerListItem(v-for="player in players" :player="player")
   DesktopLayout(v-if="true")
   MobileLayout(v-else)
 </template>
