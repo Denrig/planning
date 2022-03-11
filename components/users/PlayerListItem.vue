@@ -3,6 +3,7 @@
     img(:src="playerImage")
     .name {{ player.name }}
     span.kick-button(
+      v-if="displayKickButton"
       @click="kickPlayer"
     ) &times;
 </template>
