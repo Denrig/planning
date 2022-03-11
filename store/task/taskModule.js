@@ -8,7 +8,7 @@ export const state = () => ({
 
 export const getters = {
   tasks: (state) => state.tasks,
-  currentVotingTask: (state) => state.tasks[0],
+  currentVotingTask: (state) => state.tasks.find((task) => task.is_current),
 };
 
 export const actions = {

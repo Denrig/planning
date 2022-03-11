@@ -30,7 +30,10 @@
               ) Cancel
             b-col
               input.app-button.w-100.create-task(type="submit" value="Add!")
-  .task(v-for="task in tasks", :key="task.id")
+  .task.current-task
+    .title.h-100 {{ currentTask.text }}
+    .story-points(v-if="currentTask.result") {{currentTask.result}}
+  .task(v-for="task in otherTasks" :key="task.id" @click="handleSetCurrentTask(task)" )
     .title.h-100 {{ task.text }}
     .story-points(v-if="task.result") {{task.result}}
 </template>
@@ -51,12 +54,29 @@ export default {
     ...mapGetters({
       currentRoom: 'room/currentRoom',
       tasks: 'task/tasks',
+      currentVotingTask: 'task/currentVotingTask',
     }),
+
+    otherTasks() {
+      return this.tasks.filter((task) => !task.is_current);
+    },
+
+    currentTask() {
+      return this.currentVotingTask || {};
+    },
+  },
+
+  watch: {
+    currentTask() {
+      document.getElementsByClassName('current-task')[0].scrollIntoView({ block: 'center' });
+    },
   },
 
   methods: {
     ...mapActions({
       createTask: 'task/createTask',
+      updateTask: 'task/updateTask',
+
     }),
 
     handleAddTask() {
@@ -69,6 +89,10 @@ export default {
     handleFormState(value) {
       this.addTaskEnabled = value;
       this.$set(this, 'form', {});
+    },
+
+    handleSetCurrentTask(task) {
+      this.updateTask({ task_id: task.id, room_id: this.currentRoom.id, is_current: true });
     },
   },
 };
@@ -91,6 +115,10 @@ export default {
       background-color: $yellow;
       color: $black;
     }
+  }
+
+  .current-task {
+    box-shadow: inset 0 0 5px 2px $pink !important;
   }
 
   .task {
