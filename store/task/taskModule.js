@@ -42,7 +42,10 @@ export const actions = {
   searchTask({ commit }, payload) {
     return this.$api.tasks
       .searchTask(payload)
-      .catch((errors) => commit(TYPES.TASK_ERROR, errors));
+      .catch((errors) => {
+        commit(TYPES.TASK_ERROR, errors);
+        return Promise.reject(errors);
+      });
   },
 };
 

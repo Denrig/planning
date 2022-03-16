@@ -1,10 +1,6 @@
 <template lang="pug">
 .task-form-container
-    button.app-button.w-100.add-task(
-      @click="handleFormState(true)",
-      v-if="!addTaskEnabled"
-    ) Add Task
-    b-container(v-else)
+    b-container
       b-row.my-2
         b-col
           .input-wca.w-100
@@ -35,14 +31,6 @@
           b-row.my-2
             b-col
               .input-group
-                textarea.w-100(
-                  type="text",
-                  v-model="form.description",
-                  placeholder="Task's Description",
-                )
-          b-row.my-2
-            b-col
-              .input-group
                 input.w-100(
                   type="string",
                   v-model="form.status"
@@ -60,7 +48,7 @@
           b-row
             b-col
               button.app-button.w-100.cancel-task(
-                @click="handleFormState(false)"
+                @click="handleCancelation"
               ) Cancel
             b-col
               input.app-button.w-100.create-task(type="submit" value="Add!")
@@ -73,7 +61,6 @@ export default {
 
   data() {
     return {
-      addTaskEnabled: false,
       form: {},
       jiraId: null,
     };
@@ -90,26 +77,38 @@ export default {
     handleAddTask() {
       this.form.room_id = this.currentRoom.id;
       this.createTask(this.form).then(() => {
-        this.addTaskEnabled = false;
+        this.resetForm();
+        this.$emit('success');
       });
-    },
-
-    handleFormState(value) {
-      this.addTaskEnabled = value;
-      this.$set(this, 'form', {});
-    },
-
-    handleSetCurrentTask(task) {
-      this.updateTask({ task_id: task.id, room_id: this.currentRoom.id, is_current: true });
     },
 
     handleSearchTask() {
       this.searchTask({ task_id: this.jiraId, room_id: this.currentRoom.id })
         .then((data) => { this.form = data; });
     },
+
+    handleCancelation() {
+      this.resetForm();
+      this.$emit('cancel');
+    },
+
+    resetForm() {
+      this.$set(this, 'form', {});
+      this.jiraId = null;
+    },
   },
 };
 </script>
+<style lang="scss">
+  .task-form-container {
+    .app-button {
+      font-size: $medium-text;
+      font-weight: $bold;
+    }
 
-<style>
+    .create-task {
+      background-color: $yellow;
+      color: $black;
+    }
+  }
 </style>
