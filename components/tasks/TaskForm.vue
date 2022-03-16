@@ -75,14 +75,21 @@ export default {
     }),
 
     handleAddTask() {
-      this.form.room_id = this.currentRoom.id;
-      this.createTask(this.form).then(() => {
+      this.formatJiraId();
+      const request = {
+        ...this.form,
+        room_id: this.currentRoom.id,
+        jira_id: this.jiraId,
+      };
+
+      this.createTask(request).then(() => {
         this.resetForm();
         this.$emit('success');
       });
     },
 
     handleSearchTask() {
+      this.formatJiraId();
       this.searchTask({ task_id: this.jiraId, room_id: this.currentRoom.id })
         .then((data) => { this.form = data; });
     },
@@ -95,6 +102,15 @@ export default {
     resetForm() {
       this.$set(this, 'form', {});
       this.jiraId = null;
+    },
+
+    validCardUrl(str) {
+      const pattern = new RegExp('https://wolfpackdigital.atlassian.net/browse');
+      return !!pattern.test(str);
+    },
+
+    formatJiraId() {
+      if (this.validCardUrl(this.jiraId)) this.jiraId = this.jiraId.split('/').pop();
     },
   },
 };

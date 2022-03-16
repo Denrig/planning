@@ -2,7 +2,7 @@
 .tasks-section
   div(v-show="activeTab === 1")
     button.app-button.w-100.add-task(@click="changeTab(2)") Add Task
-    Task(:task="currentTask")
+    Task(v-if="currentTask.id" :task="currentTask")
     Task(v-for="task in otherTasks" :key="task.id" :task="task")
   TaskForm(
     v-show="activeTab === 2"

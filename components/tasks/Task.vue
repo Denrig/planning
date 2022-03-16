@@ -40,7 +40,6 @@ export default {
 .task {
   position: relative;
   margin: 10px;
-  max-height: 150px;
   border-radius: 10px;
   border: 2px solid $grey;
 
