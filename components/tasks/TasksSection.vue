@@ -1,35 +1,6 @@
 <template lang="pug">
 .tasks-section
-  .task-form-container
-    button.app-button.w-100.add-task(
-      @click="handleFormState(true)",
-      v-if="!addTaskEnabled"
-    ) Add Task
-    ValidationObserver(v-slot="{ handleSubmit }", v-else)
-      form(@submit.prevent="handleSubmit(handleAddTask)")
-        b-container
-          b-row
-            b-col
-              ValidationProvider.input-group.text(
-                rules="required",
-                name="title",
-                v-slot="{ errors, invalid, dirty }",
-                tag="div"
-              )
-                input.w-100(
-                  type="string",
-                  v-model="form.text",
-                  placeholder="Task's title",
-                  :class="{ invalid: errors[0] }"
-                )
-                span.error {{errors[0]}}
-          b-row
-            b-col
-              button.app-button.w-100.cancel-task(
-                @click="handleFormState(false)"
-              ) Cancel
-            b-col
-              input.app-button.w-100.create-task(type="submit" value="Add!")
+  TaskForm
   .task.current-task
     .title.h-100 {{ currentTask.text }}
     .story-points(v-if="currentTask.result") {{currentTask.result}}
@@ -39,14 +10,18 @@
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import TaskForm from '@/components/tasks/TaskForm.vue';
 
 export default {
   name: 'TasksSection',
 
+  components: {
+    TaskForm,
+  },
+
   data() {
     return {
       form: {},
-      addTaskEnabled: false,
     };
   },
 
@@ -73,23 +48,7 @@ export default {
   },
 
   methods: {
-    ...mapActions({
-      createTask: 'task/createTask',
-      updateTask: 'task/updateTask',
-
-    }),
-
-    handleAddTask() {
-      this.form.room_id = this.currentRoom.id;
-      this.createTask(this.form).then(() => {
-        this.addTaskEnabled = false;
-      });
-    },
-
-    handleFormState(value) {
-      this.addTaskEnabled = value;
-      this.$set(this, 'form', {});
-    },
+    ...mapActions({ updateTask: 'task/updateTask' }),
 
     handleSetCurrentTask(task) {
       this.updateTask({ task_id: task.id, room_id: this.currentRoom.id, is_current: true });

@@ -10,12 +10,11 @@
       TasksSection
       Result
   VotingBar
-  //- .result
 </template>
 <script>
 import { mapGetters } from 'vuex';
 import VotingBar from '@/components/rooms/voting-room/desktop/VotingBar.vue';
-import TasksSection from '@/components/rooms/voting-room/desktop/TasksSection.vue';
+import TasksSection from '@/components/tasks/TasksSection.vue';
 import Player from '@/components/users/Player.vue';
 import Result from '@/components/rooms/voting-room/Result.vue';
 

@@ -38,6 +38,12 @@ export const actions = {
       .then(() => commit(TYPES.TASK_SUCCESS))
       .catch((errors) => commit(TYPES.TASK_ERROR, errors));
   },
+
+  searchTask({ commit }, payload) {
+    return this.$api.tasks
+      .searchTask(payload)
+      .catch((errors) => commit(TYPES.TASK_ERROR, errors));
+  },
 };
 
 export const mutations = {
