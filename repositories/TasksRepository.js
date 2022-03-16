@@ -14,6 +14,10 @@ const TasksRepository = (axios) => ({
     return axios.get(`v1/rooms/${roomId}/tasks`).then((response) => response.data);
   },
 
+  searchTask(payload) {
+    return axios.get(`v1/rooms/${payload.room_id}/tasks/${payload.task_id}`).then((response) => response.data);
+  },
+
   // Votes
 
   vote(payload) {
