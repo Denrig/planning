@@ -28,34 +28,34 @@
                     :class="{ invalid: errors[0] }"
                   )
                   span.error {{ errors[0] }}
-            //- b-row TO DO: Enable this in a future iteration
-            //-   b-col
-            //-     ValidationProvider.input-group.text(
-            //-       rules="required",
-            //-       name="noUsers",
-            //-       v-slot="{ errors, invalid, dirty }",
-            //-       tag="div"
-            //-     )
-            //-       input(
-            //-         type="number",
-            //-         v-model="form.players_count",
-            //-         placeholder="Players Count",
-            //-         :class="{ invalid: invalid && dirty }"
-            //-       )
-            //-   b-col
-            //-     ValidationProvider.input-group.checkbox(
-            //-       rules="required",
-            //-       name="code",
-            //-       v-slot="{ errors, invalid, dirty }",
-            //-       tag="div"
-            //-     )
-            //-       label Is Private?
-            //-       b-form-checkbox(
-            //-         type="checkbox",
-            //-         size="lg",
-            //-         v-model="form.is_private",
-            //-         :class="{ invalid: invalid && dirty }"
-            //-       )
+            b-row
+              b-col
+                ValidationProvider.input-group(
+                  name="jiraKey",
+                  v-slot="{ errors, invalid, dirty }",
+                  tag="div"
+                )
+                  input.w-100(
+                    type="string",
+                    v-model="form.jira_key",
+                    placeholder="Jira Key",
+                    :class="{ invalid: errors[0]  }"
+                  )
+                  span.error {{ errors[0] }}
+              //- b-col TO DO: Enable this in a future iteration
+              //-   ValidationProvider.input-group.checkbox(
+              //-     rules="required",
+              //-     name="code",
+              //-     v-slot="{ errors, invalid, dirty }",
+              //-     tag="div"
+              //-   )
+              //-     label Is Private?
+              //-     b-form-checkbox(
+              //-       type="checkbox",
+              //-       size="lg",
+              //-       v-model="form.is_private",
+              //-       :class="{ invalid: invalid && dirty }"
+              //-     )
             b-row
               input.app-button.w-100(type="submit" value="Create Room!")
 </template>

@@ -8,6 +8,7 @@
     )
       template(slot='items' slot-scope='{ props }')
         td.table-column {{props.name}}
+        td.table-column {{props.jira_key}}
         td.table-column
           BIcon(icon="play-fill" font-scale="2" @click="handleJoinRoom(props)")
 </template>
@@ -27,6 +28,7 @@ export default {
 
       headers: [
         { text: 'Name' },
+        { text: 'Jira Key' },
         { text: '' },
       ],
       totalCount: 0,
