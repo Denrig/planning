@@ -8,7 +8,7 @@
     @close="handleRoomsModalState(false)"
   )
     template(v-slot:modal-body)
-      RoomsTable(@joinRoomClicked="joinRoomClicked")
+      RoomsTable(ref="roomsTable" @joinRoomClicked="joinRoomClicked")
 
 </template>
 <script>
@@ -28,6 +28,12 @@ export default {
     ...mapGetters({
       roomsModal: 'modal/roomsModal',
     }),
+  },
+
+  watch: {
+    roomsModal(val) {
+      if (val) this.$refs.roomsTable.fetchRooms();
+    },
   },
 
   methods: {

@@ -43,10 +43,6 @@ export default {
     }),
   },
 
-  mounted() {
-    this.fetchRooms();
-  },
-
   methods: {
     ...mapActions({
       getRooms: 'room/getRooms',
