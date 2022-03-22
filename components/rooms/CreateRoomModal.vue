@@ -38,7 +38,7 @@
                   input.w-100(
                     type="string",
                     v-model="form.jira_key",
-                    placeholder="Jira Key",
+                    placeholder="Jira Key(e.g SSMZ)",
                     :class="{ invalid: errors[0]  }"
                   )
                   span.error {{ errors[0] }}
