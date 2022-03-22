@@ -36,6 +36,45 @@ export const actions = {
       });
   },
 
+  deleteRoom({ commit }, id) {
+    commit(TYPES.ROOM_REQUEST);
+    return this.$api.rooms
+      .deleteRoom(id)
+      .then(() => commit(TYPES.ROOM_SUCCESS))
+      .catch((errors) => {
+        commit(TYPES.ROOM_ERROR, errors);
+        return Promise.reject(errors);
+      });
+  },
+
+  getCurrentRoom({ commit }) {
+    return this.$api.rooms
+      .getRoom(StorageService.getFromStorage(STORAGE_KEYS.SESSION_ID_KEY))
+      .then((response) => {
+        commit(TYPES.SET_CURRENT_ROOM, response);
+        commit(TYPES.SET_PLAYERS, response.players);
+        commit('task/SET_TASKS', response.tasks, { root: true });
+      })
+      .catch((errors) => {
+        commit(TYPES.ROOM_ERROR, errors);
+        return Promise.reject(errors);
+      });
+  },
+
+  getRooms({ commit }, params) {
+    commit(TYPES.ROOM_REQUEST);
+    return this.$api.rooms
+      .getRooms(params)
+      .then((response) => {
+        commit(TYPES.SET_ROOMS, response);
+        return response.headers;
+      })
+      .catch((errors) => {
+        commit(TYPES.ROOM_ERROR, errors);
+        return Promise.reject(errors);
+      });
+  },
+
   getRoomByCode({ commit }, payload) {
     commit(TYPES.ROOM_REQUEST);
 
@@ -75,34 +114,6 @@ export const actions = {
       });
   },
 
-  getCurrentRoom({ commit }) {
-    return this.$api.rooms
-      .getCurrentRoom(StorageService.getFromStorage(STORAGE_KEYS.SESSION_ID_KEY))
-      .then((response) => {
-        commit(TYPES.SET_CURRENT_ROOM, response);
-        commit(TYPES.SET_PLAYERS, response.players);
-        commit('task/SET_TASKS', response.tasks, { root: true });
-      })
-      .catch((errors) => {
-        commit(TYPES.ROOM_ERROR, errors);
-        return Promise.reject(errors);
-      });
-  },
-
-  getRooms({ commit }, params) {
-    commit(TYPES.ROOM_REQUEST);
-    return this.$api.rooms
-      .getRooms(params)
-      .then((response) => {
-        commit(TYPES.SET_ROOMS, response);
-        return response.headers;
-      })
-      .catch((errors) => {
-        commit(TYPES.ROOM_ERROR, errors);
-        return Promise.reject(errors);
-      });
-  },
-
   clearLocalStorage() {
     StorageService.deleteFromStorage(STORAGE_KEYS.CURRENT_ROLE);
     StorageService.deleteFromStorage(STORAGE_KEYS.SESSION_ID_KEY);
@@ -120,6 +131,12 @@ export const actions = {
       notifyError(this, 'You have been kicked');
     }
     commit(TYPES.PLAYER_LEFT, data);
+  },
+
+  notifyRoomDeleted() {
+    this.dispatch('room/clearLocalStorage');
+    $nuxt.$router.replace('/');
+    notifyError(this, 'Your room has been deleted!');
   },
 };
 

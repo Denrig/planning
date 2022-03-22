@@ -6,6 +6,7 @@ const TYPES = {
   PLAYER_CANCELED_VOTE: 'PLAYER_VOTE_CANCELED',
   DISPLAY_VOTES_CHANGED: 'DISPLAY_VOTES_CHANGED',
   TASK_UPDATED: 'TASK_UPDATED',
+  ROOM_DELETED: 'ROOM_DELETED',
 };
 
 export const WebSocketHandler = {
@@ -35,6 +36,8 @@ export const WebSocketHandler = {
         store.dispatch('voting/displayVotesChanged', data.value);
         store.commit('voting/SET_VOTING_RESULTS', data.results || {});
         break;
+      case TYPES.ROOM_DELETED:
+        store.dispatch('room/notifyRoomDeleted');
       default:
         console.log('Unknown');
     }

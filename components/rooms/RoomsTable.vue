@@ -11,6 +11,7 @@
         td.table-column {{props.jira_key}}
         td.table-column
           BIcon(icon="play-fill" font-scale="2" @click="handleJoinRoom(props)")
+          BIcon(icon="trash" font-scale="2" @click="handleDeleteRoom(props.id)")
 </template>
 <script>
 import { mapGetters, mapActions, mapMutations } from 'vuex';
@@ -46,6 +47,7 @@ export default {
   methods: {
     ...mapActions({
       getRooms: 'room/getRooms',
+      deleteRoom: 'room/deleteRoom',
     }),
 
     ...mapMutations({
@@ -75,6 +77,10 @@ export default {
     handleJoinRoom(room) {
       this.setCurrentRoom(room);
       this.$emit('joinRoomClicked');
+    },
+
+    handleDeleteRoom(id) {
+      if (confirm('Do you want to delete this room?')) this.deleteRoom(id).then(() => this.fetchRooms());
     },
   },
 
