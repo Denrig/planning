@@ -111,6 +111,7 @@ export default {
 
     formatJiraId() {
       if (this.validCardUrl(this.jiraId)) this.jiraId = this.jiraId.split('/').pop();
+      this.jiraId = this.jiraId?.replace(/[^a-zA-Z0-9-]/g, '');
     },
   },
 };
