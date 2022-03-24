@@ -12,11 +12,6 @@ export const getters = {
 };
 
 export const actions = {
-  // Websocket handlers
-  addTask({ commit }, task) {
-    commit(TYPES.ADD_TASK, task);
-  },
-
   // Api Calls
   getTasksForRoom({ commit }, roomId) {
     return this.$api.tasks
@@ -47,6 +42,15 @@ export const actions = {
         return Promise.reject(errors);
       });
   },
+
+  destroyTasks({ commit }, roomId) {
+    return this.$api.tasks
+      .destroyAllTasks(roomId)
+      .catch((errors) => {
+        commit(TYPES.TASK_ERROR, errors);
+        return Promise.reject(errors);
+      });
+  },
 };
 
 export const mutations = {
@@ -56,7 +60,7 @@ export const mutations = {
   [TYPES.TASK_SUCCESS]() {
   },
 
-  [TYPES.TASK_ERROR](state, errors) {
+  [TYPES.TASK_ERROR](_, errors) {
     notifyRequestError(this, errors.response);
   },
 
@@ -70,6 +74,6 @@ export const mutations = {
 
   [TYPES.UPDATE_TASK](state, task) {
     const index = state.tasks.findIndex((stateTask) => task.id === stateTask.id);
-    Vue.set(state.tasks, index, task);
+    if (index > -1) { Vue.set(state.tasks, index, task); }
   },
 };

@@ -5,6 +5,7 @@
   b-sidebar#sidebar-1.p-1(shadow)
     button.app-button.w-100(@click="handleLeaveRoom") Leave Room
     PlayerListItem(v-for="player in players" :player="player")
+    button.app-button.w-100(@click="destroyTasks(currentRoom.id)") Clear tasks lists!
   DesktopLayout(v-if="true")
   MobileLayout(v-else)
 </template>
@@ -52,10 +53,11 @@ export default {
     ...mapActions({
       initLayoutModule: 'layout/initLayoutModule',
       getCurrentRoom: 'room/getCurrentRoom',
+      clearLocalStorage: 'room/clearLocalStorage',
       getCurrentUser: 'user/getCurrentUser',
       getVotesForTask: 'voting/getVotesForTask',
-      clearLocalStorage: 'room/clearLocalStorage',
       leaveRoom: 'room/leaveRoom',
+      destroyTasks: 'task/destroyTasks',
     }),
 
     subscribeToCable() {

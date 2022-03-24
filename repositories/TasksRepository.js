@@ -18,6 +18,10 @@ const TasksRepository = (axios) => ({
     return axios.get(`v1/rooms/${payload.room_id}/tasks/${payload.task_id}`).then((response) => response.data);
   },
 
+  destroyAllTasks(roomId) {
+    return axios.delete(`v1/rooms/${roomId}/tasks`);
+  },
+
   // Votes
 
   vote(payload) {
