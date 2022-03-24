@@ -8,7 +8,8 @@
         template(v-if="data.length > 0 || loading")
           tr.table-row.right(v-for="(props, index) in localItems" :key="index")
             slot(name="items" v-bind:props="props")
-          Loader
+          tr.loading(v-if="loading")
+            Loader
         tr.no-data(v-else)
           td(:colspan="headers.length") No data available!
     div.table-footer
@@ -121,6 +122,10 @@ export default {
     &:last-of-type{
       border-right: none;
     }
+  }
+
+  tr.loading {
+    height: 4rem;
   }
 
   .table-row {
